@@ -1,0 +1,73 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
+    "allowJs": false,
+    "jsx": "react-jsx",
+    "strict": true,
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "types": [
+      "jest",
+      "detox"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": [
+        "src/components/*"
+      ],
+      "@/screens/*": [
+        "src/screens/*"
+      ],
+      "@/state/*": [
+        "src/state/*"
+      ],
+      "@/theme/*": [
+        "src/theme/*"
+      ],
+      "@/services/*": [
+        "src/services/*"
+      ],
+      "@/navigation/*": [
+        "src/navigation/*"
+      ],
+      "@/data/*": [
+        "src/data/*"
+      ],
+      "@/hooks/*": [
+        "src/hooks/*"
+      ],
+      "@/utils/*": [
+        "src/utils/*"
+      ],
+      "@/supabase/*": [
+        "src/supabase/*"
+      ],
+      "@/types": [
+        "src/types.ts"
+      ],
+      "@/*": [
+        "src/*"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "App.tsx",
+    "vitest.config.ts",
+    "detox.config.ts",
+    "scripts",
+    "tests"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "extends": "expo/tsconfig.base"
+}

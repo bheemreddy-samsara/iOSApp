@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.corepack/
+
+# Expo / React Native caches
+.expo/
+.expo-shared/
+
+# Environment and local config
+.env
+.env.*
+.DS_Store
+*.log
+
+# Tooling
+.kiro/
+.vscode/
+
+# iOS
+ios/Pods/
+ios/build/
+
+# Android (if generated later)
+android/
+
+# Testing artifacts
+coverage/
+
+# Misc
+*.swp
+*.swo
+

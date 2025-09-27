@@ -1,0 +1,185 @@
+import { CalendarEvent, Member } from '@/types';
+
+export const demoMembers: Member[] = [
+  { id: 'm-ava', familyId: 'family-1', name: 'Ava (Mom)', role: 'owner', color: '#5E6AD2', emoji: '🌼', avatarBackground: '#D5DAFF' },
+  { id: 'm-oliver', familyId: 'family-1', name: 'Oliver (Dad)', role: 'admin', color: '#FF9F80', emoji: '🚀', avatarBackground: '#FFE177' },
+  { id: 'm-jamie', familyId: 'family-1', name: 'Jamie', role: 'member', color: '#58D0C9', emoji: '🎸', avatarBackground: '#7BC7FF' },
+  { id: 'm-zoe', familyId: 'family-1', name: 'Zoe', role: 'child', color: '#FF92C2', emoji: '🦄', avatarBackground: '#FF9F80' },
+  { id: 'm-nora', familyId: 'family-1', name: 'Nora (Grandma)', role: 'member', color: '#FFE177', emoji: '🍪', avatarBackground: '#F5A35C' }
+];
+
+const baseDate = new Date();
+
+const iso = (daysFromNow: number, hours: number, minutes = 0) => {
+  const date = new Date(baseDate);
+  date.setDate(baseDate.getDate() + daysFromNow);
+  date.setHours(hours, minutes, 0, 0);
+  return date.toISOString();
+};
+
+export const demoEvents: CalendarEvent[] = [
+  {
+    id: 'evt-1',
+    calendarId: 'family-main',
+    title: 'Pediatric Checkup',
+    description: 'Bring vaccine card and questions list.',
+    location: 'Sunrise Clinic',
+    category: '🏥 Health',
+    start: iso(1, 9),
+    end: iso(1, 10),
+    approvalState: 'approved',
+    privacyMode: 'family',
+    creatorId: 'm-ava',
+    attendees: ['m-ava', 'm-zoe'],
+    allDay: false,
+    multiDay: false,
+    provider: undefined
+  },
+  {
+    id: 'evt-2',
+    calendarId: 'family-main',
+    title: 'Jamie Soccer Practice',
+    description: 'Coach Lee, field 3. Bring water + shin guards.',
+    location: 'Willow Park',
+    category: '⚽ Sports',
+    start: iso(0, 17, 30),
+    end: iso(0, 19),
+    approvalState: 'approved',
+    privacyMode: 'family',
+    creatorId: 'm-oliver',
+    attendees: ['m-jamie'],
+    allDay: false,
+    multiDay: false,
+    provider: undefined
+  },
+  {
+    id: 'evt-3',
+    calendarId: 'family-main',
+    title: 'Zoe Art Showcase',
+    description: 'Arrive early for seating',
+    location: 'Sunnydale Elementary',
+    category: '🎨 School',
+    start: iso(3, 18),
+    end: iso(3, 19, 30),
+    approvalState: 'pending',
+    privacyMode: 'family',
+    creatorId: 'm-zoe',
+    attendees: ['m-ava', 'm-oliver', 'm-zoe'],
+    allDay: false,
+    multiDay: false,
+    provider: undefined
+  },
+  {
+    id: 'evt-4',
+    calendarId: 'family-main',
+    title: 'Weekend Camping',
+    description: "Reserve site 12, pack s'mores!",
+    location: 'Cascade State Park',
+    category: '🏠 Family',
+    start: iso(5, 8),
+    end: iso(7, 18),
+    approvalState: 'approved',
+    privacyMode: 'family',
+    creatorId: 'm-oliver',
+    attendees: demoMembers.map((m) => m.id),
+    allDay: true,
+    multiDay: true,
+    provider: undefined
+  },
+  {
+    id: 'evt-5',
+    calendarId: 'work-import',
+    title: 'Product Sync – Busy',
+    category: 'Work',
+    start: iso(0, 13),
+    end: iso(0, 14),
+    approvalState: 'approved',
+    privacyMode: 'busy-only',
+    creatorId: 'm-ava',
+    attendees: [],
+    isBusyOnly: true,
+    allDay: false,
+    multiDay: false,
+    provider: 'outlook'
+  },
+  {
+    id: 'evt-6',
+    calendarId: 'family-main',
+    title: 'Homework Club',
+    description: 'Math focus. Bring worksheets.',
+    location: 'Library Room B',
+    category: '🎒 School',
+    start: iso(2, 15),
+    end: iso(2, 16, 30),
+    approvalState: 'approved',
+    privacyMode: 'family',
+    creatorId: 'm-jamie',
+    attendees: ['m-jamie'],
+    allDay: false,
+    multiDay: false
+  },
+  {
+    id: 'evt-7',
+    calendarId: 'family-main',
+    title: 'Family Dinner with Grandma',
+    description: "Try Nora's peach cobbler recipe.",
+    location: 'Home',
+    category: '🏠 Family',
+    start: iso(4, 18),
+    end: iso(4, 20),
+    approvalState: 'approved',
+    privacyMode: 'family',
+    creatorId: 'm-ava',
+    attendees: demoMembers.map((m) => m.id),
+    allDay: false,
+    multiDay: false
+  },
+  {
+    id: 'evt-8',
+    calendarId: 'family-main',
+    title: 'Piano Lesson',
+    description: 'Practice "River Flows in You"',
+    location: 'Ms. Chen Studio',
+    category: '🎵 Creatives',
+    start: iso(6, 16),
+    end: iso(6, 17),
+    approvalState: 'approved',
+    privacyMode: 'family',
+    creatorId: 'm-ava',
+    attendees: ['m-zoe'],
+    allDay: false,
+    multiDay: false
+  },
+  {
+    id: 'evt-9',
+    calendarId: 'family-main',
+    title: 'PTA Meeting',
+    description: 'Vote on spring fair theme.',
+    location: 'School Gym',
+    category: '🎒 School',
+    start: iso(1, 18),
+    end: iso(1, 19, 30),
+    approvalState: 'approved',
+    privacyMode: 'family',
+    creatorId: 'm-ava',
+    attendees: ['m-ava'],
+    allDay: false,
+    multiDay: false
+  },
+  {
+    id: 'evt-10',
+    calendarId: 'family-main',
+    title: 'Science Fair Prep',
+    description: 'Print display board, gather photos.',
+    location: 'Home',
+    category: '🎓 Projects',
+    start: iso(2, 19),
+    end: iso(2, 20, 30),
+    approvalState: 'approved',
+    privacyMode: 'family',
+    creatorId: 'm-oliver',
+    attendees: ['m-jamie', 'm-oliver'],
+    allDay: false,
+    multiDay: false
+  }
+];

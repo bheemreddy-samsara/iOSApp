@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "TogetherCal",
+    "slug": "togethercal",
+    "scheme": "togethercal",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F7F7FB"
+    },
+    "plugins": [
+      "expo-notifications"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.togethercal.app",
+      "infoPlist": {
+        "NSCalendarsUsageDescription": "TogetherCal reads your calendar to keep your family in sync without uploading private details.",
+        "NSUserTrackingUsageDescription": "Tracking is disabled by default."
+      }
+    },
+    "android": {
+      "package": "com.togethercal.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F7F7FB"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    "runtimeVersion": "1.0.0"
+  }
+}
