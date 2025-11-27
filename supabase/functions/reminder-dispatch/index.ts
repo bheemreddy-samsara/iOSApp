@@ -130,10 +130,22 @@ serve(async (req) => {
               ? 'Starting now'
               : `Starting in ${minutesUntil} minute${minutesUntil > 1 ? 's' : ''}`;
 
-          await sendExpoPushNotification(device.push_token, event.title, body, {
-            event_id: event.id,
-            type: 'reminder',
-          });
+          const pushResult = await sendExpoPushNotification(
+            device.push_token,
+            event.title,
+            body,
+            {
+              event_id: event.id,
+              type: 'reminder',
+            },
+          );
+
+          // Check for Expo push API errors (can return 200 with error body)
+          if (pushResult.data?.[0]?.status === 'error') {
+            throw new Error(
+              pushResult.data[0].message || 'Push notification failed',
+            );
+          }
 
           results.push({ reminder_id: reminder.id, success: true });
         } catch (err) {
