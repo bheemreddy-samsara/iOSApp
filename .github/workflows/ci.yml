@@ -136,6 +136,16 @@ jobs:
       - name: Install Detox CLI
         run: npm install -g detox-cli
 
+      - name: Install applesimutils
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
+
+      - name: Boot iOS Simulator
+        run: |
+          xcrun simctl boot "iPhone 15" || true
+          xcrun simctl list devices
+
       - name: Build iOS app for testing
         run: detox build --configuration ios
 
