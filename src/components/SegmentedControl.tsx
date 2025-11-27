@@ -13,40 +13,44 @@ interface SegmentedControlProps {
   onChange: (key: string) => void;
 }
 
-export const SegmentedControl = memo(({ segments, value, onChange }: SegmentedControlProps) => {
-  return (
-    <View style={styles.container} accessibilityRole="tablist">
-      {segments.map((segment) => {
-        const isActive = value === segment.key;
-        return (
-          <Pressable
-            key={segment.key}
-            accessibilityRole="tab"
-            accessibilityState={{ selected: isActive }}
-            accessibilityLabel={segment.label}
-            onPress={() => onChange(segment.key)}
-            style={[styles.segment, isActive && styles.segmentActive]}
-          >
-            <Text style={[styles.label, isActive && styles.labelActive]}>{segment.label}</Text>
-          </Pressable>
-        );
-      })}
-    </View>
-  );
-});
+export const SegmentedControl = memo(
+  ({ segments, value, onChange }: SegmentedControlProps) => {
+    return (
+      <View style={styles.container} accessibilityRole="tablist">
+        {segments.map((segment) => {
+          const isActive = value === segment.key;
+          return (
+            <Pressable
+              key={segment.key}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: isActive }}
+              accessibilityLabel={segment.label}
+              onPress={() => onChange(segment.key)}
+              style={[styles.segment, isActive && styles.segmentActive]}
+            >
+              <Text style={[styles.label, isActive && styles.labelActive]}>
+                {segment.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: colors.surfaceMuted,
     borderRadius: radii.lg,
-    padding: 4
+    padding: 4,
   },
   segment: {
     flex: 1,
     paddingVertical: 12,
     borderRadius: radii.md,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   segmentActive: {
     backgroundColor: colors.surface,
@@ -54,14 +58,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 1,
     shadowRadius: 16,
-    elevation: 3
+    elevation: 3,
   },
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: colors.textSecondary
+    color: colors.textSecondary,
   },
   labelActive: {
-    color: colors.textPrimary
-  }
+    color: colors.textPrimary,
+  },
 });

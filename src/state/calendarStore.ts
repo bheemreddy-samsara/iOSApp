@@ -13,6 +13,7 @@ interface CalendarState {
   upsertEvents: (events: CalendarEvent[]) => void;
   updateEvent: (event: CalendarEvent) => void;
   removeEvent: (eventId: string) => void;
+  clearEvents: () => void;
   setFilters: (filters: CalendarFilterState) => void;
   reset: () => void;
 }
@@ -20,7 +21,7 @@ interface CalendarState {
 const initialFilters: CalendarFilterState = {
   memberIds: [],
   categories: [],
-  showPending: true
+  showPending: true,
 };
 
 export const useCalendarStore = create<CalendarState>()(
@@ -38,25 +39,26 @@ export const useCalendarStore = create<CalendarState>()(
             events.forEach((event) => {
               draft.events[event.id] = event;
             });
-          })
+          }),
         ),
       updateEvent: (event) =>
         set(
           produce((draft: CalendarState) => {
             draft.events[event.id] = event;
-          })
+          }),
         ),
       removeEvent: (eventId) =>
         set(
           produce((draft: CalendarState) => {
             delete draft.events[eventId];
-          })
+          }),
         ),
+      clearEvents: () => set({ events: {} }),
       setFilters: (filters) => set({ filters }),
-      reset: () => set({ events: {}, filters: initialFilters })
+      reset: () => set({ events: {}, filters: initialFilters }),
     }),
     {
-      name: 'calendar-store'
-    }
-  )
+      name: 'calendar-store',
+    },
+  ),
 );

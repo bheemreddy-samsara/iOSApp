@@ -7,14 +7,14 @@ const roleCopy: Record<MemberRole, string> = {
   owner: 'Owner',
   admin: 'Admin',
   member: 'Member',
-  child: 'Child'
+  child: 'Child',
 };
 
 const roleColor: Record<MemberRole, string> = {
   owner: colors.primary,
   admin: colors.accent,
   member: colors.categoryTeal,
-  child: colors.categoryPink
+  child: colors.categoryPink,
 };
 
 interface RoleBadgeProps {
@@ -22,11 +22,14 @@ interface RoleBadgeProps {
 }
 
 export const RoleBadge = memo(({ role }: RoleBadgeProps) => (
-  <View style={[styles.badge, { backgroundColor: roleColor[role] + '22' }]}
+  <View
+    style={[styles.badge, { backgroundColor: roleColor[role] + '22' }]}
     accessibilityRole="text"
     accessibilityLabel={`Role ${roleCopy[role]}`}
   >
-    <Text style={[styles.label, { color: roleColor[role] }]}>{roleCopy[role]}</Text>
+    <Text style={[styles.label, { color: roleColor[role] }]}>
+      {roleCopy[role]}
+    </Text>
   </View>
 ));
 
@@ -35,10 +38,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 999,
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
   },
   label: {
     fontSize: 12,
-    fontWeight: '600'
-  }
+    fontWeight: '600',
+  },
 });

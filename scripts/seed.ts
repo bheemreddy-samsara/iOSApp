@@ -6,15 +6,24 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !serviceRoleKey) {
-  throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables.');
+  throw new Error(
+    'Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables.',
+  );
 }
 
-const client = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
+const client = createClient(supabaseUrl, serviceRoleKey, {
+  auth: { persistSession: false },
+});
 
 async function seed() {
   const { data: family } = await client
     .from('families')
-    .upsert({ id: '00000000-0000-0000-0000-000000000001', name: 'Demo Family', owner_id: demoMembers[0].id, timezone: 'America/Los_Angeles' })
+    .upsert({
+      id: '00000000-0000-0000-0000-000000000001',
+      name: 'Demo Family',
+      owner_id: demoMembers[0].id,
+      timezone: 'America/Los_Angeles',
+    })
     .select()
     .single();
 
@@ -29,9 +38,9 @@ async function seed() {
         role: member.role,
         color_hex: member.color,
         emoji: member.emoji,
-        status: 'active'
-      })
-    )
+        status: 'active',
+      }),
+    ),
   );
 
   await Promise.all(
@@ -50,9 +59,9 @@ async function seed() {
         all_day: event.allDay ?? false,
         approval_state: event.approvalState,
         is_busy_only: event.isBusyOnly ?? false,
-        source: event.provider ?? 'internal'
-      })
-    )
+        source: event.provider ?? 'internal',
+      }),
+    ),
   );
 
   console.log('Seed complete');

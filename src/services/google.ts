@@ -1,4 +1,9 @@
+import * as AuthSession from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
 import { CalendarEvent } from '@/types';
+
+// Required for web browser auth
+WebBrowser.maybeCompleteAuthSession();
 
 type GoogleCalendarListResponse = {
   items: Array<{ id: string; summary: string }>;
@@ -15,52 +20,119 @@ type GoogleEventsResponse = {
   }>;
 };
 
-const googleDiscoveryDoc = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
+export const googleScopes = [
+  'openid',
+  'profile',
+  'email',
+  'https://www.googleapis.com/auth/calendar.readonly',
+];
 
-export const googleScopes = ['openid', 'profile', 'email', 'https://www.googleapis.com/auth/calendar.readonly'];
+const googleDiscovery = {
+  authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+  tokenEndpoint: 'https://oauth2.googleapis.com/token',
+  revocationEndpoint: 'https://oauth2.googleapis.com/revoke',
+};
 
-export async function startGoogleOAuth() {
-  // TODO: Update to use newer Expo AuthSession API
-  console.warn('Google OAuth not implemented - requires Expo AuthSession update');
-  return { type: 'cancel' };
-
-  /*
-  return AuthSession.startAsync({
-    authUrl: `https://accounts.google.com/o/oauth2/v2/auth?${AuthSession.getQueryParams({
-      client_id: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID ?? '',
-      response_type: 'code',
-      redirect_uri: AuthSession.makeRedirectUri({ useProxy: true }),
-      scope: googleScopes.join(' ')
-    })}`,
-    returnUrl: AuthSession.makeRedirectUri({ useProxy: true })
+export function useGoogleAuth() {
+  const clientId = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID ?? '';
+  const redirectUri = AuthSession.makeRedirectUri({
+    scheme: 'togethercal',
   });
-  */
+
+  const [request, response, promptAsync] = AuthSession.useAuthRequest(
+    {
+      clientId,
+      scopes: googleScopes,
+      redirectUri,
+      responseType: AuthSession.ResponseType.Code,
+      usePKCE: true,
+    },
+    googleDiscovery,
+  );
+
+  return { request, response, promptAsync };
 }
 
-export async function fetchGoogleCalendars(accessToken: string): Promise<GoogleCalendarListResponse> {
-  const response = await fetch('https://www.googleapis.com/calendar/v3/users/me/calendarList', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
+export async function exchangeGoogleCode(
+  code: string,
+  codeVerifier: string,
+): Promise<{ accessToken: string; refreshToken?: string }> {
+  const clientId = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID ?? '';
+  const redirectUri = AuthSession.makeRedirectUri({
+    scheme: 'togethercal',
   });
+
+  const tokenResponse = await AuthSession.exchangeCodeAsync(
+    {
+      clientId,
+      code,
+      redirectUri,
+      extraParams: {
+        code_verifier: codeVerifier,
+      },
+    },
+    googleDiscovery,
+  );
+
+  return {
+    accessToken: tokenResponse.accessToken,
+    refreshToken: tokenResponse.refreshToken ?? undefined,
+  };
+}
+
+export async function refreshGoogleToken(
+  refreshToken: string,
+): Promise<{ accessToken: string }> {
+  const clientId = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID ?? '';
+
+  const tokenResponse = await AuthSession.refreshAsync(
+    {
+      clientId,
+      refreshToken,
+    },
+    googleDiscovery,
+  );
+
+  return {
+    accessToken: tokenResponse.accessToken,
+  };
+}
+
+export async function fetchGoogleCalendars(
+  accessToken: string,
+): Promise<GoogleCalendarListResponse> {
+  const response = await fetch(
+    'https://www.googleapis.com/calendar/v3/users/me/calendarList',
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
   if (!response.ok) {
     throw new Error('Failed to load Google calendars');
   }
   return response.json();
 }
 
-export async function fetchGoogleEvents(calendarId: string, accessToken: string): Promise<CalendarEvent[]> {
+export async function fetchGoogleEvents(
+  calendarId: string,
+  accessToken: string,
+): Promise<CalendarEvent[]> {
   const params = new URLSearchParams({
     singleEvents: 'true',
     maxResults: '2500',
     orderBy: 'startTime',
-    timeMin: new Date().toISOString()
+    timeMin: new Date().toISOString(),
   });
-  const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?${params}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
-  });
+  const response = await fetch(
+    `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?${params}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
   if (!response.ok) {
     throw new Error('Failed to load Google events');
   }
@@ -80,7 +152,7 @@ export async function fetchGoogleEvents(calendarId: string, accessToken: string)
     creatorId: '',
     attendees: [],
     isBusyOnly: true,
-    provider: 'google'
+    provider: 'google',
   }));
 }
 

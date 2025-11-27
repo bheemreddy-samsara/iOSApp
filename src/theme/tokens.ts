@@ -14,7 +14,7 @@ export const colors = {
   categoryBlue: '#7BC7FF',
   categoryPink: '#FF92C2',
   categoryTeal: '#58D0C9',
-  categoryYellow: '#FFE177'
+  categoryYellow: '#FFE177',
 } as const;
 
 export const typography = {
@@ -24,7 +24,7 @@ export const typography = {
   body: { fontSize: 18, lineHeight: 26, fontWeight: '400' as const },
   callout: { fontSize: 16, lineHeight: 22, fontWeight: '500' as const },
   footnote: { fontSize: 14, lineHeight: 20, fontWeight: '500' as const },
-  caption: { fontSize: 12, lineHeight: 16, fontWeight: '400' as const }
+  caption: { fontSize: 12, lineHeight: 16, fontWeight: '400' as const },
 };
 
 export const spacing = {
@@ -37,7 +37,7 @@ export const spacing = {
   '2xl': 24,
   '3xl': 32,
   '4xl': 40,
-  '5xl': 48
+  '5xl': 48,
 } as const;
 
 export const radii = {
@@ -46,7 +46,7 @@ export const radii = {
   md: 16,
   lg: 24,
   xl: 32,
-  pill: 999
+  pill: 999,
 } as const;
 
 export const shadows = {
@@ -55,29 +55,29 @@ export const shadows = {
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 1,
     shadowRadius: 12,
-    elevation: 4
+    elevation: 4,
   },
   elevated: {
     shadowColor: 'rgba(25, 32, 72, 0.18)',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 1,
     shadowRadius: 24,
-    elevation: 8
+    elevation: 8,
   },
   modal: {
     shadowColor: 'rgba(12, 16, 44, 0.24)',
     shadowOffset: { width: 0, height: 24 },
     shadowOpacity: 1,
     shadowRadius: 48,
-    elevation: 16
-  }
+    elevation: 16,
+  },
 } as const;
 
 export const motion = {
   spring: { stiffness: 160, damping: 20 },
   durationFast: 150,
   durationBase: 250,
-  durationSlow: 400
+  durationSlow: 400,
 } as const;
 
 export type ColorToken = keyof typeof colors;

@@ -20,7 +20,7 @@ import { RootStackParamList } from '@/navigation';
 const segments = [
   { key: 'month', label: 'Month' },
   { key: 'week', label: 'Week' },
-  { key: 'day', label: 'Day' }
+  { key: 'day', label: 'Day' },
 ] as Array<{ key: string; label: string }>;
 
 const categoryChips: CategoryChip[] = [
@@ -28,11 +28,12 @@ const categoryChips: CategoryChip[] = [
   { id: '🎒 School', emoji: '🎒', label: 'School' },
   { id: '⚽ Sports', emoji: '⚽', label: 'Sports' },
   { id: '🏠 Family', emoji: '🏠', label: 'Family' },
-  { id: '🎓 Projects', emoji: '🎓', label: 'Projects' }
+  { id: '🎓 Projects', emoji: '🎓', label: 'Projects' },
 ];
 
 export function CalendarScreen() {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   useDemoData();
   const members = useDemoMembers();
   const eventsMap = useCalendarStore((state) => state.events);
@@ -44,9 +45,15 @@ export function CalendarScreen() {
   const setSelectedDate = useCalendarStore((state) => state.setSelectedDate);
 
   const events = useMemo(() => Object.values(eventsMap), [eventsMap]);
-  const filteredEvents = useMemo(() => filterEvents(events, filters), [events, filters]);
+  const filteredEvents = useMemo(
+    () => filterEvents(events, filters),
+    [events, filters],
+  );
 
-  const weekDays = useMemo(() => buildWeekDays(new Date(selectedDate)), [selectedDate]);
+  const weekDays = useMemo(
+    () => buildWeekDays(new Date(selectedDate)),
+    [selectedDate],
+  );
 
   const eventsByDate = useMemo(() => {
     const map = new Map<string, CalendarEvent[]>();
@@ -73,9 +80,13 @@ export function CalendarScreen() {
     setFilters({ ...filters, categories: next });
   };
 
-  const resetFilters = () => setFilters({ ...filters, memberIds: [], categories: [] });
+  const resetFilters = () =>
+    setFilters({ ...filters, memberIds: [], categories: [] });
 
-  const headerDate = format(new Date(selectedDate), view === 'month' ? 'MMMM yyyy' : 'EEEE, MMMM do');
+  const headerDate = format(
+    new Date(selectedDate),
+    view === 'month' ? 'MMMM yyyy' : 'EEEE, MMMM do',
+  );
 
   return (
     <View style={styles.screen}>
@@ -84,7 +95,11 @@ export function CalendarScreen() {
           <Text style={styles.label}>Calendar</Text>
           <Text style={styles.date}>{headerDate}</Text>
         </View>
-        <SegmentedControl segments={segments} value={view} onChange={(key) => setView(key as typeof view)} />
+        <SegmentedControl
+          segments={segments}
+          value={view}
+          onChange={(key) => setView(key as typeof view)}
+        />
       </View>
       <FilterBar
         members={members}
@@ -106,17 +121,27 @@ export function CalendarScreen() {
           />
         )}
         {view === 'week' && (
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.weekContent}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.weekContent}
+          >
             {weekDays.map((day) => {
               const dayIso = day.toISOString();
               return (
                 <View key={dayIso} style={styles.weekDay}>
-                  <Text style={styles.weekDayLabel}>{format(day, 'EEE dd')}</Text>
+                  <Text style={styles.weekDayLabel}>
+                    {format(day, 'EEE dd')}
+                  </Text>
                   <DayColumn
                     date={dayIso}
                     events={eventsByDate.get(dayIso.slice(0, 10)) ?? []}
-                    onSelectEvent={(eventId) => navigation.navigate('EventEditor', { eventId })}
-                    onCreateSlot={(iso) => navigation.navigate('EventEditor', { eventId: undefined })}
+                    onSelectEvent={(eventId) =>
+                      navigation.navigate('EventEditor', { eventId })
+                    }
+                    onCreateSlot={(iso) =>
+                      navigation.navigate('EventEditor', { eventId: undefined })
+                    }
                   />
                 </View>
               );
@@ -127,8 +152,12 @@ export function CalendarScreen() {
           <DayColumn
             date={selectedDate}
             events={eventsByDate.get(selectedDate.slice(0, 10)) ?? []}
-            onSelectEvent={(eventId) => navigation.navigate('EventEditor', { eventId })}
-            onCreateSlot={(iso) => navigation.navigate('EventEditor', { eventId: undefined })}
+            onSelectEvent={(eventId) =>
+              navigation.navigate('EventEditor', { eventId })
+            }
+            onCreateSlot={(iso) =>
+              navigation.navigate('EventEditor', { eventId: undefined })
+            }
           />
         )}
       </View>
@@ -141,9 +170,14 @@ export function CalendarScreen() {
 
 function filterEvents(events: CalendarEvent[], filters: CalendarFilterState) {
   return events.filter((event) => {
-    const memberMatch = filters.memberIds.length === 0 || event.attendees?.some((id) => filters.memberIds.includes(id));
-    const categoryMatch = filters.categories.length === 0 || filters.categories.includes(event.category ?? '');
-    const pendingMatch = filters.showPending || event.approvalState !== 'pending';
+    const memberMatch =
+      filters.memberIds.length === 0 ||
+      event.attendees?.some((id) => filters.memberIds.includes(id));
+    const categoryMatch =
+      filters.categories.length === 0 ||
+      filters.categories.includes(event.category ?? '');
+    const pendingMatch =
+      filters.showPending || event.approvalState !== 'pending';
     return memberMatch && categoryMatch && pendingMatch;
   });
 }
@@ -153,43 +187,43 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: spacing['3xl'],
     paddingTop: spacing['3xl'],
-    backgroundColor: colors.background
+    backgroundColor: colors.background,
   },
   topSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 20,
   },
   label: {
     fontSize: 16,
-    color: colors.textSecondary
+    color: colors.textSecondary,
   },
   date: {
     fontSize: 30,
     fontWeight: '700',
-    color: colors.textPrimary
+    color: colors.textPrimary,
   },
   calendarContainer: {
     flex: 1,
-    marginTop: 16
+    marginTop: 16,
   },
   weekContent: {
     gap: 16,
-    paddingBottom: 120
+    paddingBottom: 120,
   },
   weekDay: {
-    width: 280
+    width: 280,
   },
   weekDayLabel: {
     fontSize: 16,
     fontWeight: '600',
     color: colors.textPrimary,
-    marginBottom: 12
+    marginBottom: 12,
   },
   fabContainer: {
     position: 'absolute',
     right: 24,
-    bottom: 36
-  }
+    bottom: 36,
+  },
 });

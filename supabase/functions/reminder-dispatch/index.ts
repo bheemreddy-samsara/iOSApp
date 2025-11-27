@@ -7,6 +7,6 @@ serve(async (req) => {
   // TODO: Fetch upcoming reminders and push notifications via Expo or email provider.
 
   return new Response(JSON.stringify({ ok: true }), {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   });
 });

@@ -9,18 +9,20 @@ interface EmojiChipProps {
   onPress: () => void;
 }
 
-export const EmojiChip = memo(({ emoji, label, active = false, onPress }: EmojiChipProps) => (
-  <Pressable
-    accessibilityRole="button"
-    accessibilityState={{ selected: active }}
-    accessibilityLabel={`${label} category`}
-    onPress={onPress}
-    style={[styles.chip, active && styles.activeChip]}
-  >
-    <Text style={styles.emoji}>{emoji}</Text>
-    <Text style={[styles.label, active && styles.activeLabel]}>{label}</Text>
-  </Pressable>
-));
+export const EmojiChip = memo(
+  ({ emoji, label, active = false, onPress }: EmojiChipProps) => (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ selected: active }}
+      accessibilityLabel={`${label} category`}
+      onPress={onPress}
+      style={[styles.chip, active && styles.activeChip]}
+    >
+      <Text style={styles.emoji}>{emoji}</Text>
+      <Text style={[styles.label, active && styles.activeLabel]}>{label}</Text>
+    </Pressable>
+  ),
+);
 
 const styles = StyleSheet.create({
   chip: {
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 999,
-    backgroundColor: colors.surfaceMuted
+    backgroundColor: colors.surfaceMuted,
   },
   activeChip: {
     backgroundColor: colors.primary,
@@ -38,17 +40,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 6 },
-    elevation: 3
+    elevation: 3,
   },
   emoji: {
-    fontSize: 18
+    fontSize: 18,
   },
   label: {
     fontSize: 14,
     color: colors.textSecondary,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   activeLabel: {
-    color: '#FFFFFF'
-  }
+    color: '#FFFFFF',
+  },
 });

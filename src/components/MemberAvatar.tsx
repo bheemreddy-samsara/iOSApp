@@ -8,25 +8,38 @@ interface MemberAvatarProps {
   showPresence?: boolean;
 }
 
-export const MemberAvatar = memo(({ member, size = 44, showPresence = false }: MemberAvatarProps) => {
-  return (
-    <View style={[styles.container, { width: size, height: size, borderRadius: size / 2, backgroundColor: member.avatarBackground }]}
-      accessibilityRole="image"
-      accessibilityLabel={`${member.name} avatar`}
-    >
-      <Text style={[styles.emoji, { fontSize: size * 0.6 }]}>{member.emoji}</Text>
-      {showPresence && <View style={styles.presenceDot} />}
-    </View>
-  );
-});
+export const MemberAvatar = memo(
+  ({ member, size = 44, showPresence = false }: MemberAvatarProps) => {
+    return (
+      <View
+        style={[
+          styles.container,
+          {
+            width: size,
+            height: size,
+            borderRadius: size / 2,
+            backgroundColor: member.avatarBackground,
+          },
+        ]}
+        accessibilityRole="image"
+        accessibilityLabel={`${member.name} avatar`}
+      >
+        <Text style={[styles.emoji, { fontSize: size * 0.6 }]}>
+          {member.emoji}
+        </Text>
+        {showPresence && <View style={styles.presenceDot} />}
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   emoji: {
-    color: '#1C1E26'
+    color: '#1C1E26',
   },
   presenceDot: {
     position: 'absolute',
@@ -37,6 +50,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#48B27F',
     borderWidth: 2,
-    borderColor: '#FFFFFF'
-  }
+    borderColor: '#FFFFFF',
+  },
 });

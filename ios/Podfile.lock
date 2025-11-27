@@ -13,8 +13,6 @@ PODS:
     - ExpoModulesCore
   - ExpoContacts (13.0.5):
     - ExpoModulesCore
-  - ExpoCrypto (13.0.2):
-    - ExpoModulesCore
   - ExpoFileSystem (17.0.1):
     - ExpoModulesCore
   - ExpoFont (12.0.10):
@@ -1264,31 +1262,12 @@ PODS:
     - React-logger (= 0.74.5)
     - React-perflogger (= 0.74.5)
     - React-utils (= 0.74.5)
-  - RNCAsyncStorage (1.24.0):
+  - RNCAsyncStorage (1.23.1):
     - React-Core
   - RNDateTimePicker (8.0.1):
     - React-Core
-  - RNFlashList (1.8.3):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Codegen
+  - RNFlashList (1.6.4):
     - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - RNGestureHandler (2.16.2):
     - DoubleConversion
     - glog
@@ -1353,7 +1332,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.13.0):
+  - RNSVG (15.2.0):
     - React-Core
   - SocketRocket (0.7.0)
   - Yoga (0.0.0)
@@ -1361,21 +1340,20 @@ PODS:
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
-  - EXApplication (from `../node_modules/expo-application/ios`)
+  - "EXApplication (from `../node_modules/.pnpm/expo-application@5.9.1_expo@51.0.39/node_modules/expo-application/ios`)"
   - "EXConstants (from `../node_modules/.pnpm/expo-constants@16.0.2_expo@51.0.39/node_modules/expo-constants/ios`)"
   - "EXNotifications (from `../node_modules/.pnpm/expo-notifications@0.28.19_expo@51.0.39/node_modules/expo-notifications/ios`)"
-  - "Expo (from `../node_modules/.pnpm/expo@51.0.39_@babel+core@7.28.4_@babel+preset-env@7.28.3_react-native@0.74.5_react@18.2.0/node_modules/expo`)"
-  - ExpoAsset (from `../node_modules/expo-asset/ios`)
+  - "Expo (from `../node_modules/.pnpm/expo@51.0.39_@babel+core@7.24.7_@babel+preset-env@7.28.3_react-native@0.74.5_react@18.2.0/node_modules/expo`)"
+  - "ExpoAsset (from `../node_modules/.pnpm/expo-asset@10.0.10_expo@51.0.39/node_modules/expo-asset/ios`)"
   - "ExpoContacts (from `../node_modules/.pnpm/expo-contacts@13.0.5_expo@51.0.39/node_modules/expo-contacts/ios`)"
-  - ExpoCrypto (from `../node_modules/expo-crypto/ios`)
   - "ExpoFileSystem (from `../node_modules/.pnpm/expo-file-system@17.0.1_expo@51.0.39/node_modules/expo-file-system/ios`)"
-  - ExpoFont (from `../node_modules/expo-font/ios`)
+  - "ExpoFont (from `../node_modules/.pnpm/expo-font@12.0.10_expo@51.0.39/node_modules/expo-font/ios`)"
   - "ExpoHaptics (from `../node_modules/.pnpm/expo-haptics@13.0.1_expo@51.0.39/node_modules/expo-haptics/ios`)"
-  - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
+  - "ExpoKeepAwake (from `../node_modules/.pnpm/expo-keep-awake@13.0.2_expo@51.0.39/node_modules/expo-keep-awake/ios`)"
   - "ExpoLocalization (from `../node_modules/.pnpm/expo-localization@15.0.3_expo@51.0.39/node_modules/expo-localization/ios`)"
-  - ExpoModulesCore (from `../node_modules/expo-modules-core`)
+  - "ExpoModulesCore (from `../node_modules/.pnpm/expo-modules-core@1.12.26/node_modules/expo-modules-core`)"
   - "ExpoSecureStore (from `../node_modules/.pnpm/expo-secure-store@13.0.2_expo@51.0.39/node_modules/expo-secure-store/ios`)"
-  - ExpoWebBrowser (from `../node_modules/expo-web-browser/ios`)
+  - "ExpoWebBrowser (from `../node_modules/.pnpm/expo-web-browser@13.0.3_expo@51.0.39/node_modules/expo-web-browser/ios`)"
   - "EXSplashScreen (from `../node_modules/.pnpm/expo-splash-screen@0.27.7_expo-modules-autolinking@1.11.3_expo@51.0.39/node_modules/expo-splash-screen/ios`)"
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -1453,35 +1431,33 @@ EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
-    :path: "../node_modules/expo-application/ios"
+    :path: "../node_modules/.pnpm/expo-application@5.9.1_expo@51.0.39/node_modules/expo-application/ios"
   EXConstants:
     :path: "../node_modules/.pnpm/expo-constants@16.0.2_expo@51.0.39/node_modules/expo-constants/ios"
   EXNotifications:
     :path: "../node_modules/.pnpm/expo-notifications@0.28.19_expo@51.0.39/node_modules/expo-notifications/ios"
   Expo:
-    :path: "../node_modules/.pnpm/expo@51.0.39_@babel+core@7.28.4_@babel+preset-env@7.28.3_react-native@0.74.5_react@18.2.0/node_modules/expo"
+    :path: "../node_modules/.pnpm/expo@51.0.39_@babel+core@7.24.7_@babel+preset-env@7.28.3_react-native@0.74.5_react@18.2.0/node_modules/expo"
   ExpoAsset:
-    :path: "../node_modules/expo-asset/ios"
+    :path: "../node_modules/.pnpm/expo-asset@10.0.10_expo@51.0.39/node_modules/expo-asset/ios"
   ExpoContacts:
     :path: "../node_modules/.pnpm/expo-contacts@13.0.5_expo@51.0.39/node_modules/expo-contacts/ios"
-  ExpoCrypto:
-    :path: "../node_modules/expo-crypto/ios"
   ExpoFileSystem:
     :path: "../node_modules/.pnpm/expo-file-system@17.0.1_expo@51.0.39/node_modules/expo-file-system/ios"
   ExpoFont:
-    :path: "../node_modules/expo-font/ios"
+    :path: "../node_modules/.pnpm/expo-font@12.0.10_expo@51.0.39/node_modules/expo-font/ios"
   ExpoHaptics:
     :path: "../node_modules/.pnpm/expo-haptics@13.0.1_expo@51.0.39/node_modules/expo-haptics/ios"
   ExpoKeepAwake:
-    :path: "../node_modules/expo-keep-awake/ios"
+    :path: "../node_modules/.pnpm/expo-keep-awake@13.0.2_expo@51.0.39/node_modules/expo-keep-awake/ios"
   ExpoLocalization:
     :path: "../node_modules/.pnpm/expo-localization@15.0.3_expo@51.0.39/node_modules/expo-localization/ios"
   ExpoModulesCore:
-    :path: "../node_modules/expo-modules-core"
+    :path: "../node_modules/.pnpm/expo-modules-core@1.12.26/node_modules/expo-modules-core"
   ExpoSecureStore:
     :path: "../node_modules/.pnpm/expo-secure-store@13.0.2_expo@51.0.39/node_modules/expo-secure-store/ios"
   ExpoWebBrowser:
-    :path: "../node_modules/expo-web-browser/ios"
+    :path: "../node_modules/.pnpm/expo-web-browser@13.0.3_expo@51.0.39/node_modules/expo-web-browser/ios"
   EXSplashScreen:
     :path: "../node_modules/.pnpm/expo-splash-screen@0.27.7_expo-modules-autolinking@1.11.3_expo@51.0.39/node_modules/expo-splash-screen/ios"
   FBLazyVector:
@@ -1617,7 +1593,6 @@ SPEC CHECKSUMS:
   Expo: ed0a748eb6be0efd2c3df7f6de3f3158a14464c9
   ExpoAsset: 286fee7ba711ce66bf20b315e68106b13b8629fc
   ExpoContacts: 7ff826023ae74e6f29876a0942e00722c9b7bdf4
-  ExpoCrypto: c5c052d5f9f668c21975cb4caf072cec23c823fa
   ExpoFileSystem: 2988caaf68b7cb706e36d382829d99811d9d76a5
   ExpoFont: 38dddf823e32740c2a9f37c926a33aeca736b5c4
   ExpoHaptics: 9f47be324f691b6291c17c216189ab832d1a4d69
@@ -1682,13 +1657,13 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 2cbd0f3625b30bba08e8768776107f6f0203159b
   React-utils: 9fa4e5d0b5e6c6c85c958f19d6ef854337886417
   ReactCommon: 9f285823dbe955099978d9bff65a7653ca029256
-  RNCAsyncStorage: b6410dead2732b5c72a7fdb1ecb5651bbcf4674b
+  RNCAsyncStorage: aa75595c1aefa18f868452091fa0c411a516ce11
   RNDateTimePicker: dde7ca9005d716f3efa9a63004b441679bca9a41
-  RNFlashList: c9741d9808fcfef8646ea8c332eed63b86348c3d
+  RNFlashList: 23b2c67aa684179d29c8c2f468c6f5334e609951
   RNGestureHandler: 326e35460fb6c8c64a435d5d739bea90d7ed4e49
-  RNReanimated: 143620dc2a58bc4d3496ddf9d4f7086562269159
+  RNReanimated: 463d2fc8a710ba07637e3002c250cacc0e92b4b5
   RNScreens: a2d8a2555b4653d7a19706eb172f855657ac30d7
-  RNSVG: 1ab3a3f49eff9853690012d9672e46fdb5ef75be
+  RNSVG: 0e7deccab0678200815104223aadd5ca734dd41d
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 950bbfd7e6f04790fdb51149ed51df41f329fcc8
 

@@ -14,7 +14,7 @@ import { EventCard } from '@/components/EventCard';
 import { FAB } from '@/components/FAB';
 import { FilterBar } from '@/components/FilterBar';
 import { OfflineNotice } from '@/components/OfflineNotice';
-import { CalendarFilterState, CategoryChip } from '@/types';
+import { CategoryChip } from '@/types';
 import { RootStackParamList } from '@/navigation';
 import { Plus, Bell } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
@@ -25,16 +25,17 @@ const categoryChips: CategoryChip[] = [
   { id: '⚽ Sports', emoji: '⚽', label: 'Sports' },
   { id: '🏠 Family', emoji: '🏠', label: 'Family' },
   { id: '🎨 School', emoji: '🎨', label: 'Arts' },
-  { id: '🎓 Projects', emoji: '🎓', label: 'Projects' }
+  { id: '🎓 Projects', emoji: '🎓', label: 'Projects' },
 ];
 
 export function HomeScreen() {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   useDemoData();
   const members = useDemoMembers();
   const { isOfflineMode, toggleOfflineMode } = useSettingsStore((state) => ({
     isOfflineMode: state.isOfflineMode,
-    toggleOfflineMode: state.toggleOfflineMode
+    toggleOfflineMode: state.toggleOfflineMode,
   }));
   const filters = useCalendarStore((state) => state.filters);
   const setFilters = useCalendarStore((state) => state.setFilters);
@@ -44,7 +45,9 @@ export function HomeScreen() {
     const now = new Date();
     return events
       .filter((event) => new Date(event.start) >= now)
-      .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+      .sort(
+        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime(),
+      );
   }, [events]);
 
   const heroDate = format(new Date(), 'EEEE, MMMM do');
@@ -65,12 +68,17 @@ export function HomeScreen() {
     setFilters({ ...filters, categories: next });
   };
 
-  const resetFilters = () => setFilters({ memberIds: [], categories: [], showPending: true });
+  const resetFilters = () =>
+    setFilters({ memberIds: [], categories: [], showPending: true });
 
   const filteredEvents = useMemo(() => {
     return upcoming.filter((event) => {
-      const memberMatch = filters.memberIds.length === 0 || event.attendees?.some((id) => filters.memberIds.includes(id));
-      const categoryMatch = filters.categories.length === 0 || filters.categories.includes(event.category ?? '');
+      const memberMatch =
+        filters.memberIds.length === 0 ||
+        event.attendees?.some((id) => filters.memberIds.includes(id));
+      const categoryMatch =
+        filters.categories.length === 0 ||
+        filters.categories.includes(event.category ?? '');
       return memberMatch && categoryMatch;
     });
   }, [filters, upcoming]);
@@ -86,18 +94,37 @@ export function HomeScreen() {
         data={filteredEvents}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <EventCard event={item} onPress={() => navigation.navigate('EventEditor', { eventId: item.id })} />
+          <EventCard
+            event={item}
+            onPress={() =>
+              navigation.navigate('EventEditor', { eventId: item.id })
+            }
+          />
         )}
         estimatedItemSize={140}
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={() => (
           <View style={styles.headerSection}>
-            <View style={[styles.heroRow, { marginTop: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
+            <View
+              style={[
+                styles.heroRow,
+                {
+                  marginTop: 32,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                },
+              ]}
+            >
               <View>
                 <Text style={styles.heroLabel}>Today</Text>
                 <Text style={styles.heroDate}>{heroDate}</Text>
               </View>
-              <Pressable accessibilityRole="button" onPress={goToNotifications} style={styles.notificationBtn}>
+              <Pressable
+                accessibilityRole="button"
+                onPress={goToNotifications}
+                style={styles.notificationBtn}
+              >
                 <Bell color={colors.primary} size={24} />
               </Pressable>
             </View>
@@ -124,12 +151,18 @@ export function HomeScreen() {
         ListEmptyComponent={() => (
           <View style={styles.emptyState}>
             <Text style={styles.emptyTitle}>Catch your breath</Text>
-            <Text style={styles.emptyCopy}>Nothing on the horizon. Maybe plan a picnic?</Text>
+            <Text style={styles.emptyCopy}>
+              Nothing on the horizon. Maybe plan a picnic?
+            </Text>
           </View>
         )}
       />
       <View style={styles.fabContainer}>
-        <FAB icon={Plus} label="Plan event" onPress={() => navigation.navigate('EventEditor')} />
+        <FAB
+          icon={Plus}
+          label="Plan event"
+          onPress={() => navigation.navigate('EventEditor')}
+        />
       </View>
     </View>
   );
@@ -138,27 +171,27 @@ export function HomeScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: colors.background
+    backgroundColor: colors.background,
   },
   listContent: {
     paddingHorizontal: spacing['3xl'],
     paddingBottom: 140,
-    gap: 24
+    gap: 24,
   },
   headerSection: {
-    gap: 24
+    gap: 24,
   },
   heroRow: {
     // Base style for hero row
   },
   heroLabel: {
     fontSize: 16,
-    color: colors.textSecondary
+    color: colors.textSecondary,
   },
   heroDate: {
     fontSize: 36,
     fontWeight: '700',
-    color: colors.textPrimary
+    color: colors.textPrimary,
   },
   notificationBtn: {
     width: 48,
@@ -166,7 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     backgroundColor: colors.surface,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   card: {
     backgroundColor: colors.surface,
@@ -177,35 +210,35 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 16 },
-    elevation: 3
+    elevation: 3,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: colors.textPrimary
+    color: colors.textPrimary,
   },
   sectionCopy: {
     fontSize: 15,
     color: colors.textSecondary,
-    lineHeight: 22
+    lineHeight: 22,
   },
   emptyState: {
     alignItems: 'center',
     gap: 8,
-    paddingVertical: 32
+    paddingVertical: 32,
   },
   emptyTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: colors.textPrimary
+    color: colors.textPrimary,
   },
   emptyCopy: {
     fontSize: 14,
-    color: colors.textSecondary
+    color: colors.textSecondary,
   },
   fabContainer: {
     position: 'absolute',
     bottom: 36,
-    right: 24
-  }
+    right: 24,
+  },
 });

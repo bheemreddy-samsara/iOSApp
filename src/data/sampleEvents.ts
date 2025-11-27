@@ -1,11 +1,51 @@
 import { CalendarEvent, Member } from '@/types';
 
 export const demoMembers: Member[] = [
-  { id: 'm-ava', familyId: 'family-1', name: 'Ava (Mom)', role: 'owner', color: '#5E6AD2', emoji: '🌼', avatarBackground: '#D5DAFF' },
-  { id: 'm-oliver', familyId: 'family-1', name: 'Oliver (Dad)', role: 'admin', color: '#FF9F80', emoji: '🚀', avatarBackground: '#FFE177' },
-  { id: 'm-jamie', familyId: 'family-1', name: 'Jamie', role: 'member', color: '#58D0C9', emoji: '🎸', avatarBackground: '#7BC7FF' },
-  { id: 'm-zoe', familyId: 'family-1', name: 'Zoe', role: 'child', color: '#FF92C2', emoji: '🦄', avatarBackground: '#FF9F80' },
-  { id: 'm-nora', familyId: 'family-1', name: 'Nora (Grandma)', role: 'member', color: '#FFE177', emoji: '🍪', avatarBackground: '#F5A35C' }
+  {
+    id: 'm-ava',
+    familyId: 'family-1',
+    name: 'Ava (Mom)',
+    role: 'owner',
+    color: '#5E6AD2',
+    emoji: '🌼',
+    avatarBackground: '#D5DAFF',
+  },
+  {
+    id: 'm-oliver',
+    familyId: 'family-1',
+    name: 'Oliver (Dad)',
+    role: 'admin',
+    color: '#FF9F80',
+    emoji: '🚀',
+    avatarBackground: '#FFE177',
+  },
+  {
+    id: 'm-jamie',
+    familyId: 'family-1',
+    name: 'Jamie',
+    role: 'member',
+    color: '#58D0C9',
+    emoji: '🎸',
+    avatarBackground: '#7BC7FF',
+  },
+  {
+    id: 'm-zoe',
+    familyId: 'family-1',
+    name: 'Zoe',
+    role: 'child',
+    color: '#FF92C2',
+    emoji: '🦄',
+    avatarBackground: '#FF9F80',
+  },
+  {
+    id: 'm-nora',
+    familyId: 'family-1',
+    name: 'Nora (Grandma)',
+    role: 'member',
+    color: '#FFE177',
+    emoji: '🍪',
+    avatarBackground: '#F5A35C',
+  },
 ];
 
 const baseDate = new Date();
@@ -33,7 +73,7 @@ export const demoEvents: CalendarEvent[] = [
     attendees: ['m-ava', 'm-zoe'],
     allDay: false,
     multiDay: false,
-    provider: undefined
+    provider: undefined,
   },
   {
     id: 'evt-2',
@@ -50,7 +90,7 @@ export const demoEvents: CalendarEvent[] = [
     attendees: ['m-jamie'],
     allDay: false,
     multiDay: false,
-    provider: undefined
+    provider: undefined,
   },
   {
     id: 'evt-3',
@@ -67,7 +107,7 @@ export const demoEvents: CalendarEvent[] = [
     attendees: ['m-ava', 'm-oliver', 'm-zoe'],
     allDay: false,
     multiDay: false,
-    provider: undefined
+    provider: undefined,
   },
   {
     id: 'evt-4',
@@ -84,7 +124,7 @@ export const demoEvents: CalendarEvent[] = [
     attendees: demoMembers.map((m) => m.id),
     allDay: true,
     multiDay: true,
-    provider: undefined
+    provider: undefined,
   },
   {
     id: 'evt-5',
@@ -100,7 +140,7 @@ export const demoEvents: CalendarEvent[] = [
     isBusyOnly: true,
     allDay: false,
     multiDay: false,
-    provider: 'outlook'
+    provider: 'outlook',
   },
   {
     id: 'evt-6',
@@ -116,7 +156,7 @@ export const demoEvents: CalendarEvent[] = [
     creatorId: 'm-jamie',
     attendees: ['m-jamie'],
     allDay: false,
-    multiDay: false
+    multiDay: false,
   },
   {
     id: 'evt-7',
@@ -132,7 +172,7 @@ export const demoEvents: CalendarEvent[] = [
     creatorId: 'm-ava',
     attendees: demoMembers.map((m) => m.id),
     allDay: false,
-    multiDay: false
+    multiDay: false,
   },
   {
     id: 'evt-8',
@@ -148,7 +188,7 @@ export const demoEvents: CalendarEvent[] = [
     creatorId: 'm-ava',
     attendees: ['m-zoe'],
     allDay: false,
-    multiDay: false
+    multiDay: false,
   },
   {
     id: 'evt-9',
@@ -164,7 +204,7 @@ export const demoEvents: CalendarEvent[] = [
     creatorId: 'm-ava',
     attendees: ['m-ava'],
     allDay: false,
-    multiDay: false
+    multiDay: false,
   },
   {
     id: 'evt-10',
@@ -180,6 +220,6 @@ export const demoEvents: CalendarEvent[] = [
     creatorId: 'm-oliver',
     attendees: ['m-jamie', 'm-oliver'],
     allDay: false,
-    multiDay: false
-  }
+    multiDay: false,
+  },
 ];

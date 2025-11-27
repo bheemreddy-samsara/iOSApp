@@ -1,6 +1,9 @@
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator, BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import {
+  createBottomTabNavigator,
+  BottomTabScreenProps,
+} from '@react-navigation/bottom-tabs';
 import { useMemo } from 'react';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { CalendarScreen } from '@/screens/CalendarScreen';
@@ -10,14 +13,18 @@ import { IntegrationsScreen } from '@/screens/IntegrationsScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
 import { OnboardingScreen } from '@/screens/OnboardingScreen';
 import { EventEditorScreen } from '@/screens/EventEditorScreen';
+import { AuthScreen } from '@/screens/AuthScreen';
+import { PrivacyPolicyScreen } from '@/screens/PrivacyPolicyScreen';
+import { TermsScreen } from '@/screens/TermsScreen';
 import { colors } from '@/theme/tokens';
 import { useAuthStore } from '@/state/authStore';
-import { Calendar } from 'lucide-react-native';
-import { Home, Bell, Users, Settings } from 'lucide-react-native';
-import { useColorScheme } from 'react-native';
+import { useSettingsStore } from '@/state/settingsStore';
+import { Calendar, Home, Users, Settings } from 'lucide-react-native';
+
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export type RootStackParamList = {
+  Auth: undefined;
   Onboarding: undefined;
   MainTabs: undefined;
   Notifications: undefined;
@@ -25,6 +32,8 @@ export type RootStackParamList = {
   Integrations: undefined;
   Settings: undefined;
   EventEditor: { eventId?: string } | undefined;
+  PrivacyPolicy: undefined;
+  Terms: undefined;
 };
 
 export type TabParamList = {
@@ -46,8 +55,8 @@ const AppTheme = {
     primary: colors.primary,
     text: colors.textPrimary,
     border: colors.border,
-    notification: colors.accent
-  }
+    notification: colors.accent,
+  },
 };
 
 function MainTabs() {
@@ -62,7 +71,7 @@ function MainTabs() {
           borderTopColor: colors.border,
           height: 72,
           paddingBottom: 14,
-          paddingTop: 12
+          paddingTop: 12,
         },
         tabBarIcon: ({ color, size }: { color: string; size: number }) => {
           switch (route.name) {
@@ -77,7 +86,7 @@ function MainTabs() {
             default:
               return <Home color={color} size={size} />;
           }
-        }
+        },
       })}
     >
       <Tab.Screen name="Today" component={HomeScreen} />
@@ -89,23 +98,104 @@ function MainTabs() {
 }
 
 export function RootNavigator() {
-  const scheme = useColorScheme();
-  const { member } = useAuthStore();
-  const hasOnboarded = Boolean(member);
+  const { session, member } = useAuthStore();
+  const { hasCompletedOnboarding } = useSettingsStore();
 
-  const theme = useMemo(() => AppTheme, [scheme]);
+  const isAuthenticated = Boolean(session);
+  const hasOnboarded = hasCompletedOnboarding || Boolean(member);
+
+  const theme = useMemo(() => AppTheme, []);
+
+  // Determine which stack to show based on auth state
+  // Using separate Groups prevents race conditions by not conditionally rendering screens
+  const authState = isAuthenticated
+    ? hasOnboarded
+      ? 'authenticated'
+      : 'onboarding'
+    : 'unauthenticated';
 
   return (
     <SafeAreaProvider>
       <NavigationContainer theme={theme}>
-        <RootStack.Navigator initialRouteName={hasOnboarded ? 'MainTabs' : 'Onboarding'}>
-          {!hasOnboarded && <RootStack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }} />}
-          <RootStack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-          <RootStack.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false, presentation: 'modal' }} />
-          <RootStack.Screen name="Members" component={MembersScreen} options={{ headerShown: false }} />
-          <RootStack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
-          <RootStack.Screen name="Integrations" component={IntegrationsScreen} options={{ title: 'Integrations', presentation: 'modal' }} />
-          <RootStack.Screen name="EventEditor" component={EventEditorScreen} options={{ title: 'Plan Event', presentation: 'fullScreenModal' }} />
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          {authState === 'unauthenticated' ? (
+            // Auth Flow - shown when not authenticated
+            <RootStack.Group>
+              <RootStack.Screen name="Auth" component={AuthScreen} />
+              <RootStack.Screen
+                name="PrivacyPolicy"
+                component={PrivacyPolicyScreen}
+                options={{ presentation: 'modal' }}
+              />
+              <RootStack.Screen
+                name="Terms"
+                component={TermsScreen}
+                options={{ presentation: 'modal' }}
+              />
+            </RootStack.Group>
+          ) : authState === 'onboarding' ? (
+            // Onboarding Flow - shown when authenticated but not onboarded
+            <RootStack.Group>
+              <RootStack.Screen
+                name="Onboarding"
+                component={OnboardingScreen}
+              />
+              <RootStack.Screen
+                name="PrivacyPolicy"
+                component={PrivacyPolicyScreen}
+                options={{ presentation: 'modal' }}
+              />
+              <RootStack.Screen
+                name="Terms"
+                component={TermsScreen}
+                options={{ presentation: 'modal' }}
+              />
+            </RootStack.Group>
+          ) : (
+            // Main App - shown when authenticated and onboarded
+            <RootStack.Group>
+              <RootStack.Screen name="MainTabs" component={MainTabs} />
+              <RootStack.Screen
+                name="Notifications"
+                component={NotificationsScreen}
+                options={{ presentation: 'modal' }}
+              />
+              <RootStack.Screen name="Members" component={MembersScreen} />
+              <RootStack.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{ headerShown: true, title: 'Settings' }}
+              />
+              <RootStack.Screen
+                name="Integrations"
+                component={IntegrationsScreen}
+                options={{
+                  headerShown: true,
+                  title: 'Integrations',
+                  presentation: 'modal',
+                }}
+              />
+              <RootStack.Screen
+                name="EventEditor"
+                component={EventEditorScreen}
+                options={{
+                  headerShown: true,
+                  title: 'Plan Event',
+                  presentation: 'fullScreenModal',
+                }}
+              />
+              <RootStack.Screen
+                name="PrivacyPolicy"
+                component={PrivacyPolicyScreen}
+                options={{ presentation: 'modal' }}
+              />
+              <RootStack.Screen
+                name="Terms"
+                component={TermsScreen}
+                options={{ presentation: 'modal' }}
+              />
+            </RootStack.Group>
+          )}
         </RootStack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
