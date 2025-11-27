@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CalendarEvent, CalendarFilterState } from '@/types';
-import { buildMonthMatrix, isInMonth, isSameDaySafe } from '@/utils/date';
+import { buildMonthMatrix, isInMonth } from '@/utils/date';
 import { colors, radii } from '@/theme/tokens';
 import { format } from 'date-fns';
 
@@ -44,7 +44,6 @@ export const CalendarGrid = memo(
     }, [filtered]);
 
     const todayIso = new Date().toISOString().slice(0, 10);
-    const referenceMonth = new Date(date).getMonth();
 
     return (
       <View>

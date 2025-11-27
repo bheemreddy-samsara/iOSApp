@@ -1,5 +1,12 @@
 // Theme tokens tests
-import { colors, typography, spacing, radii, shadows, motion } from '@/theme/tokens';
+import {
+  colors,
+  typography,
+  spacing,
+  radii,
+  shadows,
+  motion,
+} from '@/theme/tokens';
 
 describe('theme tokens', () => {
   describe('colors', () => {
@@ -65,19 +72,37 @@ describe('theme tokens', () => {
 
       styles.forEach((style) => {
         expect(typography).toHaveProperty(style);
-        expect(typography[style as keyof typeof typography]).toHaveProperty('fontSize');
-        expect(typography[style as keyof typeof typography]).toHaveProperty('lineHeight');
-        expect(typography[style as keyof typeof typography]).toHaveProperty('fontWeight');
+        expect(typography[style as keyof typeof typography]).toHaveProperty(
+          'fontSize',
+        );
+        expect(typography[style as keyof typeof typography]).toHaveProperty(
+          'lineHeight',
+        );
+        expect(typography[style as keyof typeof typography]).toHaveProperty(
+          'fontWeight',
+        );
       });
     });
 
     it('font sizes decrease from display to caption', () => {
-      expect(typography.display.fontSize).toBeGreaterThan(typography.title.fontSize);
-      expect(typography.title.fontSize).toBeGreaterThan(typography.headline.fontSize);
-      expect(typography.headline.fontSize).toBeGreaterThan(typography.body.fontSize);
-      expect(typography.body.fontSize).toBeGreaterThan(typography.callout.fontSize);
-      expect(typography.callout.fontSize).toBeGreaterThan(typography.footnote.fontSize);
-      expect(typography.footnote.fontSize).toBeGreaterThan(typography.caption.fontSize);
+      expect(typography.display.fontSize).toBeGreaterThan(
+        typography.title.fontSize,
+      );
+      expect(typography.title.fontSize).toBeGreaterThan(
+        typography.headline.fontSize,
+      );
+      expect(typography.headline.fontSize).toBeGreaterThan(
+        typography.body.fontSize,
+      );
+      expect(typography.body.fontSize).toBeGreaterThan(
+        typography.callout.fontSize,
+      );
+      expect(typography.callout.fontSize).toBeGreaterThan(
+        typography.footnote.fontSize,
+      );
+      expect(typography.footnote.fontSize).toBeGreaterThan(
+        typography.caption.fontSize,
+      );
     });
 
     it('line heights are greater than font sizes', () => {
@@ -89,7 +114,18 @@ describe('theme tokens', () => {
 
   describe('spacing', () => {
     it('has all spacing values', () => {
-      const spacings = ['xxs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl'];
+      const spacings = [
+        'xxs',
+        'xs',
+        'sm',
+        'md',
+        'lg',
+        'xl',
+        '2xl',
+        '3xl',
+        '4xl',
+        '5xl',
+      ];
 
       spacings.forEach((s) => {
         expect(spacing).toHaveProperty(s);
@@ -167,8 +203,12 @@ describe('theme tokens', () => {
     });
 
     it('shadow radius increases with intensity', () => {
-      expect(shadows.soft.shadowRadius).toBeLessThan(shadows.elevated.shadowRadius);
-      expect(shadows.elevated.shadowRadius).toBeLessThan(shadows.modal.shadowRadius);
+      expect(shadows.soft.shadowRadius).toBeLessThan(
+        shadows.elevated.shadowRadius,
+      );
+      expect(shadows.elevated.shadowRadius).toBeLessThan(
+        shadows.modal.shadowRadius,
+      );
     });
   });
 

@@ -31,13 +31,40 @@ const mockFamily: TestFamily = {
 };
 
 const mockMembers: TestMember[] = [
-  { id: 'm-1', familyId: 'f-1', name: 'Mom', role: 'owner', color: '#5E6AD2', emoji: '🌼', avatarBackground: '#5E6AD2' },
-  { id: 'm-2', familyId: 'f-1', name: 'Dad', role: 'admin', color: '#FF9F80', emoji: '🌻', avatarBackground: '#FF9F80' },
-  { id: 'm-3', familyId: 'f-1', name: 'Kid', role: 'child', color: '#58D0C9', emoji: '🌸', avatarBackground: '#58D0C9' },
+  {
+    id: 'm-1',
+    familyId: 'f-1',
+    name: 'Mom',
+    role: 'owner',
+    color: '#5E6AD2',
+    emoji: '🌼',
+    avatarBackground: '#5E6AD2',
+  },
+  {
+    id: 'm-2',
+    familyId: 'f-1',
+    name: 'Dad',
+    role: 'admin',
+    color: '#FF9F80',
+    emoji: '🌻',
+    avatarBackground: '#FF9F80',
+  },
+  {
+    id: 'm-3',
+    familyId: 'f-1',
+    name: 'Kid',
+    role: 'child',
+    color: '#58D0C9',
+    emoji: '🌸',
+    avatarBackground: '#58D0C9',
+  },
 ];
 
 // Helper function to filter members by family
-const getMembersByFamily = (members: TestMember[], familyId: string): TestMember[] => {
+const getMembersByFamily = (
+  members: TestMember[],
+  familyId: string,
+): TestMember[] => {
   return members.filter((m) => m.familyId === familyId);
 };
 
@@ -92,8 +119,24 @@ describe('MembersScreen', () => {
 
     it('preserves order within same role', () => {
       const sameRole: TestMember[] = [
-        { id: 'm-a', familyId: 'f-1', name: 'Alice', role: 'admin', color: '#AAA', emoji: '🌺', avatarBackground: '#AAA' },
-        { id: 'm-b', familyId: 'f-1', name: 'Bob', role: 'admin', color: '#BBB', emoji: '🌻', avatarBackground: '#BBB' },
+        {
+          id: 'm-a',
+          familyId: 'f-1',
+          name: 'Alice',
+          role: 'admin',
+          color: '#AAA',
+          emoji: '🌺',
+          avatarBackground: '#AAA',
+        },
+        {
+          id: 'm-b',
+          familyId: 'f-1',
+          name: 'Bob',
+          role: 'admin',
+          color: '#BBB',
+          emoji: '🌻',
+          avatarBackground: '#BBB',
+        },
       ];
       const sorted = sortMembersByRole(sameRole);
 
@@ -122,7 +165,15 @@ describe('MembersScreen', () => {
 
   describe('display members fallback', () => {
     const demoMembers: TestMember[] = [
-      { id: 'd-1', familyId: 'f-demo', name: 'Demo User', role: 'owner', color: '#000', emoji: '🌼', avatarBackground: '#000' },
+      {
+        id: 'd-1',
+        familyId: 'f-demo',
+        name: 'Demo User',
+        role: 'owner',
+        color: '#000',
+        emoji: '🌼',
+        avatarBackground: '#000',
+      },
     ];
 
     it('returns real members when available', () => {

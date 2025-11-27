@@ -26,4 +26,38 @@ module.exports = {
     'import/no-unresolved': 'error',
     'react/react-in-jsx-scope': 'off',
   },
+  overrides: [
+    {
+      files: ['jest.setup.js', 'tests/**/*.ts', 'tests/**/*.tsx'],
+      env: {
+        jest: true,
+      },
+    },
+    {
+      files: ['e2e/**/*.ts', 'e2e/**/*.tsx'],
+      env: {
+        jest: true,
+      },
+      globals: {
+        device: 'readonly',
+        element: 'readonly',
+        by: 'readonly',
+        expect: 'readonly',
+        waitFor: 'readonly',
+      },
+    },
+    {
+      files: ['supabase/functions/**/*.ts'],
+      rules: {
+        'import/no-unresolved': 'off',
+        'no-undef': 'off',
+      },
+    },
+    {
+      files: ['coverage/**/*.js'],
+      rules: {
+        'eslint-comments/no-unlimited-disable': 'off',
+      },
+    },
+  ],
 };

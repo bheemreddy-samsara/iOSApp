@@ -13,7 +13,11 @@ const validateAuthForm = (
   mode: 'sign_in' | 'sign_up',
   confirmPassword?: string,
 ): ValidationResult => {
-  const errors: { email?: string; password?: string; confirmPassword?: string } = {};
+  const errors: {
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+  } = {};
 
   if (!email) {
     errors.email = 'Please enter your email address';
@@ -38,7 +42,9 @@ const validateAuthForm = (
 };
 
 // Email validation for forgot password
-const validateEmailForReset = (email: string): { isValid: boolean; error?: string } => {
+const validateEmailForReset = (
+  email: string,
+): { isValid: boolean; error?: string } => {
   if (!email) {
     return { isValid: false, error: 'Please enter your email address first' };
   }
@@ -80,7 +86,11 @@ describe('AuthScreen', () => {
     });
 
     it('validates valid email format', () => {
-      const result = validateAuthForm('test@example.com', 'password123', 'sign_in');
+      const result = validateAuthForm(
+        'test@example.com',
+        'password123',
+        'sign_in',
+      );
       expect(result.isValid).toBe(true);
       expect(result.errors.email).toBeUndefined();
     });
@@ -94,11 +104,17 @@ describe('AuthScreen', () => {
     it('validates password length', () => {
       const result = validateAuthForm('test@example.com', 'short', 'sign_in');
       expect(result.isValid).toBe(false);
-      expect(result.errors.password).toBe('Password must be at least 8 characters');
+      expect(result.errors.password).toBe(
+        'Password must be at least 8 characters',
+      );
     });
 
     it('validates valid password', () => {
-      const result = validateAuthForm('test@example.com', 'password123', 'sign_in');
+      const result = validateAuthForm(
+        'test@example.com',
+        'password123',
+        'sign_in',
+      );
       expect(result.isValid).toBe(true);
       expect(result.errors.password).toBeUndefined();
     });
@@ -126,7 +142,11 @@ describe('AuthScreen', () => {
     });
 
     it('validates complete valid sign in form', () => {
-      const result = validateAuthForm('test@example.com', 'password123', 'sign_in');
+      const result = validateAuthForm(
+        'test@example.com',
+        'password123',
+        'sign_in',
+      );
       expect(result.isValid).toBe(true);
       expect(Object.keys(result.errors).length).toBe(0);
     });

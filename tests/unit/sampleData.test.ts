@@ -118,7 +118,14 @@ describe('sample data', () => {
     });
 
     it('each notification has required properties', () => {
-      const requiredProps = ['id', 'memberId', 'type', 'title', 'message', 'createdAt'];
+      const requiredProps = [
+        'id',
+        'memberId',
+        'type',
+        'title',
+        'message',
+        'createdAt',
+      ];
 
       demoNotifications.forEach((notification) => {
         requiredProps.forEach((prop) => {

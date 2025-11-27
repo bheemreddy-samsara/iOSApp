@@ -1,11 +1,13 @@
-import 'react-native-gesture-handler';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RootNavigator } from '@/navigation';
+import {
+  QueryClient,
+  QueryClientProvider,
+  focusManager,
+} from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { AppState, AppStateStatus } from 'react-native';
-import { focusManager } from '@tanstack/react-query';
+import { AppState } from 'react-native';
+import { RootNavigator } from '@/navigation';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 const queryClient = new QueryClient({
@@ -24,13 +26,8 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
-  const [appState, setAppState] = useState<AppStateStatus>(
-    AppState.currentState,
-  );
-
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (status) => {
-      setAppState(status);
       focusManager.setFocused(status === 'active');
     });
     return () => subscription.remove();

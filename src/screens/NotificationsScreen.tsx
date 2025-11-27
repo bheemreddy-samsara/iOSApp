@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Alert, FlatList, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import { NotificationItem } from '@/components/NotificationItem';
 import { demoNotifications } from '@/data/sampleNotifications';
 import { colors, spacing } from '@/theme/tokens';
@@ -25,7 +32,7 @@ export function NotificationsScreen() {
     }
   };
 
-  const handleSnooze = (id: string) => {
+  const handleSnooze = (_id: string) => {
     Alert.alert('Snoozed', "We'll remind you in 10 minutes.");
   };
 

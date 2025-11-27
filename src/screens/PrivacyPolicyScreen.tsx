@@ -7,7 +7,7 @@ import {
   Linking,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { colors, spacing, radii } from '@/theme/tokens';
+import { colors, spacing } from '@/theme/tokens';
 import { ChevronLeft, ExternalLink } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

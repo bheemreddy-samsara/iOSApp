@@ -19,9 +19,8 @@ import { TermsScreen } from '@/screens/TermsScreen';
 import { colors } from '@/theme/tokens';
 import { useAuthStore } from '@/state/authStore';
 import { useSettingsStore } from '@/state/settingsStore';
-import { Calendar } from 'lucide-react-native';
-import { Home, Bell, Users, Settings } from 'lucide-react-native';
-import { useColorScheme } from 'react-native';
+import { Calendar, Home, Users, Settings } from 'lucide-react-native';
+
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export type RootStackParamList = {
@@ -99,14 +98,13 @@ function MainTabs() {
 }
 
 export function RootNavigator() {
-  const scheme = useColorScheme();
   const { session, member } = useAuthStore();
   const { hasCompletedOnboarding } = useSettingsStore();
 
   const isAuthenticated = Boolean(session);
   const hasOnboarded = hasCompletedOnboarding || Boolean(member);
 
-  const theme = useMemo(() => AppTheme, [scheme]);
+  const theme = useMemo(() => AppTheme, []);
 
   // Determine which stack to show based on auth state
   // Using separate Groups prevents race conditions by not conditionally rendering screens
@@ -138,7 +136,10 @@ export function RootNavigator() {
           ) : authState === 'onboarding' ? (
             // Onboarding Flow - shown when authenticated but not onboarded
             <RootStack.Group>
-              <RootStack.Screen name="Onboarding" component={OnboardingScreen} />
+              <RootStack.Screen
+                name="Onboarding"
+                component={OnboardingScreen}
+              />
               <RootStack.Screen
                 name="PrivacyPolicy"
                 component={PrivacyPolicyScreen}

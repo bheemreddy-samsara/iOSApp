@@ -147,10 +147,16 @@ describe('eventRepository', () => {
     });
 
     it('handles different approval states', () => {
-      const pendingEvent = { ...mockDbEvent, approval_state: 'pending' as const };
+      const pendingEvent = {
+        ...mockDbEvent,
+        approval_state: 'pending' as const,
+      };
       expect(mapDatabaseToEvent(pendingEvent).approvalState).toBe('pending');
 
-      const rejectedEvent = { ...mockDbEvent, approval_state: 'rejected' as const };
+      const rejectedEvent = {
+        ...mockDbEvent,
+        approval_state: 'rejected' as const,
+      };
       expect(mapDatabaseToEvent(rejectedEvent).approvalState).toBe('rejected');
     });
 
@@ -158,7 +164,10 @@ describe('eventRepository', () => {
       const privateEvent = { ...mockDbEvent, privacy_mode: 'private' as const };
       expect(mapDatabaseToEvent(privateEvent).privacyMode).toBe('private');
 
-      const busyOnlyEvent = { ...mockDbEvent, privacy_mode: 'busy-only' as const };
+      const busyOnlyEvent = {
+        ...mockDbEvent,
+        privacy_mode: 'busy-only' as const,
+      };
       expect(mapDatabaseToEvent(busyOnlyEvent).privacyMode).toBe('busy-only');
     });
 

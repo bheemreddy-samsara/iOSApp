@@ -26,7 +26,8 @@ function transformNotification(db: DbNotification): Notification {
     title: db.payload.title || 'Notification',
     message: db.payload.body || '',
     createdAt: db.created_at,
-    readAt: db.status === 'read' ? db.delivered_at ?? db.created_at : undefined,
+    readAt:
+      db.status === 'read' ? (db.delivered_at ?? db.created_at) : undefined,
   };
 }
 

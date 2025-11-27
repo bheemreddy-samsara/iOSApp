@@ -17,7 +17,8 @@ export const eventKeys = {
 // Common query options for better error handling
 const defaultQueryOptions = {
   retry: 2,
-  retryDelay: (attemptIndex: number) => Math.min(1000 * 2 ** attemptIndex, 30000),
+  retryDelay: (attemptIndex: number) =>
+    Math.min(1000 * 2 ** attemptIndex, 30000),
 };
 
 export function useEvents(calendarId: string) {

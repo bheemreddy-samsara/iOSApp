@@ -14,7 +14,7 @@ import { EventCard } from '@/components/EventCard';
 import { FAB } from '@/components/FAB';
 import { FilterBar } from '@/components/FilterBar';
 import { OfflineNotice } from '@/components/OfflineNotice';
-import { CalendarFilterState, CategoryChip } from '@/types';
+import { CategoryChip } from '@/types';
 import { RootStackParamList } from '@/navigation';
 import { Plus, Bell } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';

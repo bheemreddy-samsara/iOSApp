@@ -21,11 +21,7 @@ export function MembersScreen() {
 
   const isLoading = familyLoading || membersLoading;
   const displayMembers =
-    members && members.length > 0
-      ? members
-      : __DEV__
-        ? demoMembers
-        : [];
+    members && members.length > 0 ? members : __DEV__ ? demoMembers : [];
 
   if (isLoading) {
     return (

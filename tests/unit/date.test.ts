@@ -1,5 +1,10 @@
 // Date utilities tests
-import { buildWeekDays, buildMonthMatrix, isInMonth, isSameDaySafe } from '@/utils/date';
+import {
+  buildWeekDays,
+  buildMonthMatrix,
+  isInMonth,
+  isSameDaySafe,
+} from '@/utils/date';
 
 describe('date utilities', () => {
   describe('buildWeekDays', () => {

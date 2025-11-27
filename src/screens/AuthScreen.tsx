@@ -16,11 +16,20 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radii } from '@/theme/tokens';
 import { useAuthStore } from '@/state/authStore';
 import { getSupabaseClient, isSupabaseConfigured } from '@/services/supabase';
-import { Calendar, Mail, Lock, Eye, EyeOff, Chrome, Apple } from 'lucide-react-native';
+import {
+  Calendar,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  Chrome,
+  Apple,
+} from 'lucide-react-native';
 import { RootStackParamList } from '@/navigation';
 
 // Lazy load Apple Authentication to avoid crashes on unsupported devices
-let AppleAuthentication: typeof import('expo-apple-authentication') | null = null;
+let AppleAuthentication: typeof import('expo-apple-authentication') | null =
+  null;
 try {
   AppleAuthentication = require('expo-apple-authentication');
 } catch {
@@ -46,9 +55,11 @@ export function AuthScreen() {
   useEffect(() => {
     // Check if Apple Auth is available
     if (AppleAuthentication) {
-      AppleAuthentication.isAvailableAsync().then(setIsAppleAuthAvailable).catch(() => {
-        setIsAppleAuthAvailable(false);
-      });
+      AppleAuthentication.isAvailableAsync()
+        .then(setIsAppleAuthAvailable)
+        .catch(() => {
+          setIsAppleAuthAvailable(false);
+        });
     }
   }, []);
 
@@ -87,7 +98,9 @@ export function AuthScreen() {
     if (!validateForm()) return;
 
     if (!isSupabaseConfigured()) {
-      setError('Authentication service not configured. Please contact support.');
+      setError(
+        'Authentication service not configured. Please contact support.',
+      );
       return;
     }
 
@@ -278,7 +291,9 @@ export function AuthScreen() {
           <View style={styles.logoContainer}>
             <Calendar color={colors.primary} size={48} />
           </View>
-          <Text style={styles.title} testID="app-title">TogetherCal</Text>
+          <Text style={styles.title} testID="app-title">
+            TogetherCal
+          </Text>
           <Text style={styles.subtitle} testID="auth-subtitle">
             {mode === 'sign_in'
               ? 'Welcome back! Sign in to continue.'
@@ -289,7 +304,9 @@ export function AuthScreen() {
         <View style={styles.form} testID="auth-form">
           {error && (
             <View style={styles.errorContainer} testID="error-container">
-              <Text style={styles.errorText} testID="error-text">{error}</Text>
+              <Text style={styles.errorText} testID="error-text">
+                {error}
+              </Text>
             </View>
           )}
 
@@ -411,8 +428,12 @@ export function AuthScreen() {
 
           {isAppleAuthAvailable && AppleAuthentication ? (
             <AppleAuthentication.AppleAuthenticationButton
-              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-              buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+              buttonType={
+                AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+              }
+              buttonStyle={
+                AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+              }
               cornerRadius={12}
               style={styles.appleButton}
               onPress={handleAppleAuth}
@@ -473,8 +494,8 @@ export function AuthScreen() {
             onPress={() => navigation.navigate('Terms')}
           >
             Terms of Service
-          </Text>
-          {' '}and{' '}
+          </Text>{' '}
+          and{' '}
           <Text
             style={styles.termsLink}
             onPress={() => navigation.navigate('PrivacyPolicy')}

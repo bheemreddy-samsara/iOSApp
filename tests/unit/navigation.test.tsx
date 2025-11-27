@@ -1,6 +1,4 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
-import { NavigationContainer } from '@react-navigation/native';
 
 // Mock all navigation dependencies
 jest.mock('@react-navigation/native-stack', () => ({
