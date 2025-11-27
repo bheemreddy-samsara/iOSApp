@@ -51,6 +51,10 @@ module.exports = {
       rules: {
         'import/no-unresolved': 'off',
         'no-undef': 'off',
+        'no-unused-vars': [
+          'warn',
+          { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+        ],
       },
     },
     {

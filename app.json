@@ -55,15 +55,15 @@
     },
     "extra": {
       "eas": {
-        "projectId": "REPLACE_WITH_EAS_PROJECT_ID"
+        "projectId": ""
       }
     },
-    "owner": "REPLACE_WITH_EXPO_USERNAME",
+    "owner": "",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/REPLACE_WITH_EAS_PROJECT_ID"
+      "url": ""
     }
   }
 }
