@@ -165,21 +165,29 @@ serve(async (req) => {
     }
 
     // Create notifications for conflicts
+    const notificationErrors: string[] = [];
     for (const conflict of conflicts) {
       for (const memberId of conflict.members_affected) {
-        await supabase.from('notifications').insert({
-          member_id: memberId,
-          payload: {
-            type: 'conflict',
-            event_a_id: conflict.event_a.id,
-            event_a_title: conflict.event_a.title,
-            event_b_id: conflict.event_b.id,
-            event_b_title: conflict.event_b.title,
-            overlap_minutes: conflict.overlap_minutes,
-          },
-          channel: 'in_app',
-          status: 'queued',
-        });
+        const { error: insertError } = await supabase
+          .from('notifications')
+          .insert({
+            member_id: memberId,
+            payload: {
+              type: 'conflict',
+              event_a_id: conflict.event_a.id,
+              event_a_title: conflict.event_a.title,
+              event_b_id: conflict.event_b.id,
+              event_b_title: conflict.event_b.title,
+              overlap_minutes: conflict.overlap_minutes,
+            },
+            channel: 'in_app',
+            status: 'queued',
+          });
+        if (insertError) {
+          notificationErrors.push(
+            `Failed to create notification for member ${memberId}: ${insertError.message}`,
+          );
+        }
       }
     }
 
@@ -188,6 +196,8 @@ serve(async (req) => {
         ok: true,
         conflicts_found: conflicts.length,
         conflicts,
+        notification_errors:
+          notificationErrors.length > 0 ? notificationErrors : undefined,
       }),
       { headers: { 'Content-Type': 'application/json' } },
     );

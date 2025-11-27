@@ -145,11 +145,16 @@ serve(async (req) => {
         }
       }
 
-      // Mark reminder as delivered
-      await supabase
-        .from('event_reminders')
-        .update({ delivered_at: now.toISOString() })
-        .eq('id', reminder.id);
+      // Only mark reminder as delivered if at least one notification succeeded
+      const successCount = results.filter(
+        (r) => r.reminder_id === reminder.id && r.success,
+      ).length;
+      if (successCount > 0) {
+        await supabase
+          .from('event_reminders')
+          .update({ delivered_at: now.toISOString() })
+          .eq('id', reminder.id);
+      }
     }
 
     return new Response(

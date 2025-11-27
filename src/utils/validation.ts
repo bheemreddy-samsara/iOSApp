@@ -112,10 +112,6 @@ export function validateEventTitle(title: string): ValidationResult {
     return { isValid: false, error: 'Event title is required' };
   }
 
-  if (sanitized.length < 1) {
-    return { isValid: false, error: 'Event title cannot be empty' };
-  }
-
   return { isValid: true, sanitized };
 }
 
@@ -174,14 +170,6 @@ export function validateName(
 
   if (!sanitized) {
     return { isValid: false, error: `${fieldName} is required` };
-  }
-
-  if (sanitized.length < 1) {
-    return { isValid: false, error: `${fieldName} cannot be empty` };
-  }
-
-  if (sanitized.length > 100) {
-    return { isValid: false, error: `${fieldName} is too long` };
   }
 
   return { isValid: true, sanitized };
