@@ -1,5 +1,9 @@
 // Jest setup for Node environment testing
 // Mock React Native modules for Node testing
+
+// Define __DEV__ global for React Native
+global.__DEV__ = true;
+
 global.console = {
   ...console,
   warn: jest.fn(),
