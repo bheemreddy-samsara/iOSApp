@@ -101,7 +101,7 @@ export function useCreateEvent() {
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
     },
     onError: (error) => {
-      console.error('Failed to create event:', error);
+      if (__DEV__) console.error('Failed to create event:', error);
     },
   });
 }
@@ -126,7 +126,7 @@ export function useUpdateEvent() {
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
     },
     onError: (error) => {
-      console.error('Failed to update event:', error);
+      if (__DEV__) console.error('Failed to update event:', error);
     },
   });
 }
@@ -142,7 +142,7 @@ export function useDeleteEvent() {
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
     },
     onError: (error) => {
-      console.error('Failed to delete event:', error);
+      if (__DEV__) console.error('Failed to delete event:', error);
     },
   });
 }
@@ -158,7 +158,7 @@ export function useApproveEvent() {
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
     },
     onError: (error) => {
-      console.error('Failed to approve event:', error);
+      if (__DEV__) console.error('Failed to approve event:', error);
     },
   });
 }
@@ -174,7 +174,7 @@ export function useRejectEvent() {
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
     },
     onError: (error) => {
-      console.error('Failed to reject event:', error);
+      if (__DEV__) console.error('Failed to reject event:', error);
     },
   });
 }

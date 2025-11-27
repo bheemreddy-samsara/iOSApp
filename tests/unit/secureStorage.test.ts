@@ -61,16 +61,12 @@ describe('secureStorage', () => {
       expect(SecureStore.setItemAsync).toHaveBeenCalledWith('test-key', '');
     });
 
-    it('logs warning on error but does not throw', async () => {
+    it('throws SecureStorageError on write failure', async () => {
       const error = new Error('SecureStore error');
       (SecureStore.setItemAsync as jest.Mock).mockRejectedValue(error);
 
-      await expect(
-        secureStorage.setItem('test-key', 'value'),
-      ).resolves.not.toThrow();
-      expect(console.warn).toHaveBeenCalledWith(
-        'SecureStore setItem error:',
-        error,
+      await expect(secureStorage.setItem('test-key', 'value')).rejects.toThrow(
+        'Failed to save secure data',
       );
     });
   });
@@ -84,15 +80,14 @@ describe('secureStorage', () => {
       expect(SecureStore.deleteItemAsync).toHaveBeenCalledWith('test-key');
     });
 
-    it('logs warning on error but does not throw', async () => {
+    it('does not throw on error (graceful degradation)', async () => {
       const error = new Error('SecureStore error');
       (SecureStore.deleteItemAsync as jest.Mock).mockRejectedValue(error);
 
-      await expect(secureStorage.removeItem('test-key')).resolves.not.toThrow();
-      expect(console.warn).toHaveBeenCalledWith(
-        'SecureStore removeItem error:',
-        error,
-      );
+      // Should not throw - remove errors are not critical
+      await expect(
+        secureStorage.removeItem('test-key'),
+      ).resolves.toBeUndefined();
     });
   });
 

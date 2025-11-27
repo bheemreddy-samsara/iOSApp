@@ -30,7 +30,10 @@ export const getSupabaseClient = () => {
   if (!supabaseUrl || !supabaseAnonKey) {
     // Return a mock client that won't actually connect
     // This allows the app to run in demo mode without Supabase
-    console.warn('Supabase credentials not configured - running in demo mode');
+    if (__DEV__)
+      console.warn(
+        'Supabase credentials not configured - running in demo mode',
+      );
     return null as unknown as SupabaseClient<Database>;
   }
   client = createClient<Database>(supabaseUrl, supabaseAnonKey, {
