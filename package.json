@@ -36,6 +36,7 @@
     "expo-contacts": "~13.0.4",
     "expo-file-system": "~17.0.1",
     "expo-haptics": "~13.0.1",
+    "expo-launch-arguments": "^0.3.0",
     "expo-localization": "~15.0.3",
     "expo-notifications": "~0.28.6",
     "expo-secure-store": "~13.0.1",

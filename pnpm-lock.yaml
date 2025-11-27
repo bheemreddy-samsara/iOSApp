@@ -56,6 +56,9 @@ dependencies:
   expo-haptics:
     specifier: ~13.0.1
     version: 13.0.1(expo@51.0.39)
+  expo-launch-arguments:
+    specifier: ^0.3.0
+    version: 0.3.0(expo@51.0.39)(react-native@0.74.5)(react@18.2.0)
   expo-localization:
     specifier: ~15.0.3
     version: 15.0.3(expo@51.0.39)
@@ -6595,6 +6598,18 @@ packages:
       expo: '*'
     dependencies:
       expo: 51.0.39(@babel/core@7.24.7)(@babel/preset-env@7.28.3)(react-native@0.74.5)(react@18.2.0)
+    dev: false
+
+  /expo-launch-arguments@0.3.0(expo@51.0.39)(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-PZUqfstkKJpSpUUe22RJjRSiTfbWh7/OKd9R8W9KweD1wqEMFBxkiQ1R8Z0zCdo9VDmc9/BOy9rbfIg12gzN9w==}
+    peerDependencies:
+      expo: '*'
+      react: '*'
+      react-native: '*'
+    dependencies:
+      expo: 51.0.39(@babel/core@7.24.7)(@babel/preset-env@7.28.3)(react-native@0.74.5)(react@18.2.0)
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.24.7)(@babel/preset-env@7.28.3)(@types/react@18.2.45)(react@18.2.0)
     dev: false
 
   /expo-linking@6.3.1(expo@51.0.39):
