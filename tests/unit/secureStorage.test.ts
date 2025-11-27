@@ -85,7 +85,9 @@ describe('secureStorage', () => {
       (SecureStore.deleteItemAsync as jest.Mock).mockRejectedValue(error);
 
       // Should not throw - remove errors are not critical
-      await expect(secureStorage.removeItem('test-key')).resolves.toBeUndefined();
+      await expect(
+        secureStorage.removeItem('test-key'),
+      ).resolves.toBeUndefined();
     });
   });
 
