@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useCalendarStore } from '@/state/calendarStore';
 import { demoEvents } from '@/data/sampleEvents';
 
@@ -8,12 +8,16 @@ import { demoEvents } from '@/data/sampleEvents';
  */
 export const useDemoData = (enabled: boolean = __DEV__) => {
   const upsertEvents = useCalendarStore((state) => state.upsertEvents);
-  const events = useCalendarStore((state) => state.events);
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
-    // Only load demo data in development mode and if no real events exist
-    if (enabled && Object.keys(events).length === 0) {
-      upsertEvents(demoEvents);
+    // Only load demo data once in development mode
+    if (enabled && !hasInitialized.current) {
+      hasInitialized.current = true;
+      const events = useCalendarStore.getState().events;
+      if (Object.keys(events).length === 0) {
+        upsertEvents(demoEvents);
+      }
     }
-  }, [enabled, upsertEvents, events]);
+  }, [enabled, upsertEvents]);
 };
