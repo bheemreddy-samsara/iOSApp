@@ -13,6 +13,7 @@ interface CalendarState {
   upsertEvents: (events: CalendarEvent[]) => void;
   updateEvent: (event: CalendarEvent) => void;
   removeEvent: (eventId: string) => void;
+  clearEvents: () => void;
   setFilters: (filters: CalendarFilterState) => void;
   reset: () => void;
 }
@@ -52,6 +53,7 @@ export const useCalendarStore = create<CalendarState>()(
             delete draft.events[eventId];
           }),
         ),
+      clearEvents: () => set({ events: {} }),
       setFilters: (filters) => set({ filters }),
       reset: () => set({ events: {}, filters: initialFilters }),
     }),

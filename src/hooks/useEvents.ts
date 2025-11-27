@@ -14,6 +14,12 @@ export const eventKeys = {
   detail: (id: string) => [...eventKeys.details(), id] as const,
 };
 
+// Common query options for better error handling
+const defaultQueryOptions = {
+  retry: 2,
+  retryDelay: (attemptIndex: number) => Math.min(1000 * 2 ** attemptIndex, 30000),
+};
+
 export function useEvents(calendarId: string) {
   const upsertEvents = useCalendarStore((state) => state.upsertEvents);
 
@@ -25,6 +31,10 @@ export function useEvents(calendarId: string) {
       return events;
     },
     staleTime: 60_000,
+    ...defaultQueryOptions,
+    meta: {
+      errorMessage: 'Failed to load events',
+    },
   });
 }
 
@@ -41,6 +51,10 @@ export function useFamilyEvents(familyId: string | undefined) {
     },
     enabled: Boolean(familyId),
     staleTime: 60_000,
+    ...defaultQueryOptions,
+    meta: {
+      errorMessage: 'Failed to load family events',
+    },
   });
 }
 
@@ -55,6 +69,10 @@ export function useUpcomingEvents(calendarId: string) {
       return events;
     },
     staleTime: 30_000,
+    ...defaultQueryOptions,
+    meta: {
+      errorMessage: 'Failed to load upcoming events',
+    },
   });
 }
 
@@ -63,6 +81,10 @@ export function useEvent(eventId: string | undefined) {
     queryKey: eventKeys.detail(eventId ?? ''),
     queryFn: () => eventRepository.fetchEventById(eventId!),
     enabled: Boolean(eventId),
+    ...defaultQueryOptions,
+    meta: {
+      errorMessage: 'Failed to load event details',
+    },
   });
 }
 
@@ -76,6 +98,9 @@ export function useCreateEvent() {
     onSuccess: (newEvent) => {
       upsertEvents([newEvent]);
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
+    },
+    onError: (error) => {
+      console.error('Failed to create event:', error);
     },
   });
 }
@@ -99,6 +124,9 @@ export function useUpdateEvent() {
       });
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
     },
+    onError: (error) => {
+      console.error('Failed to update event:', error);
+    },
   });
 }
 
@@ -111,6 +139,9 @@ export function useDeleteEvent() {
     onSuccess: (_, eventId) => {
       removeEvent(eventId);
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
+    },
+    onError: (error) => {
+      console.error('Failed to delete event:', error);
     },
   });
 }
@@ -125,6 +156,9 @@ export function useApproveEvent() {
       updateEventStore(updatedEvent);
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
     },
+    onError: (error) => {
+      console.error('Failed to approve event:', error);
+    },
   });
 }
 
@@ -137,6 +171,9 @@ export function useRejectEvent() {
     onSuccess: (updatedEvent) => {
       updateEventStore(updatedEvent);
       queryClient.invalidateQueries({ queryKey: eventKeys.lists() });
+    },
+    onError: (error) => {
+      console.error('Failed to reject event:', error);
     },
   });
 }

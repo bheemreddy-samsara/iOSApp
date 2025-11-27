@@ -108,78 +108,93 @@ export function RootNavigator() {
 
   const theme = useMemo(() => AppTheme, [scheme]);
 
-  // Determine initial route based on auth state
-  const getInitialRoute = (): keyof RootStackParamList => {
-    if (!isAuthenticated) return 'Auth';
-    if (!hasOnboarded) return 'Onboarding';
-    return 'MainTabs';
-  };
+  // Determine which stack to show based on auth state
+  // Using separate Groups prevents race conditions by not conditionally rendering screens
+  const authState = isAuthenticated
+    ? hasOnboarded
+      ? 'authenticated'
+      : 'onboarding'
+    : 'unauthenticated';
 
   return (
     <SafeAreaProvider>
       <NavigationContainer theme={theme}>
-        <RootStack.Navigator initialRouteName={getInitialRoute()}>
-          {/* Auth Flow */}
-          {!isAuthenticated && (
-            <RootStack.Screen
-              name="Auth"
-              component={AuthScreen}
-              options={{ headerShown: false }}
-            />
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          {authState === 'unauthenticated' ? (
+            // Auth Flow - shown when not authenticated
+            <RootStack.Group>
+              <RootStack.Screen name="Auth" component={AuthScreen} />
+              <RootStack.Screen
+                name="PrivacyPolicy"
+                component={PrivacyPolicyScreen}
+                options={{ presentation: 'modal' }}
+              />
+              <RootStack.Screen
+                name="Terms"
+                component={TermsScreen}
+                options={{ presentation: 'modal' }}
+              />
+            </RootStack.Group>
+          ) : authState === 'onboarding' ? (
+            // Onboarding Flow - shown when authenticated but not onboarded
+            <RootStack.Group>
+              <RootStack.Screen name="Onboarding" component={OnboardingScreen} />
+              <RootStack.Screen
+                name="PrivacyPolicy"
+                component={PrivacyPolicyScreen}
+                options={{ presentation: 'modal' }}
+              />
+              <RootStack.Screen
+                name="Terms"
+                component={TermsScreen}
+                options={{ presentation: 'modal' }}
+              />
+            </RootStack.Group>
+          ) : (
+            // Main App - shown when authenticated and onboarded
+            <RootStack.Group>
+              <RootStack.Screen name="MainTabs" component={MainTabs} />
+              <RootStack.Screen
+                name="Notifications"
+                component={NotificationsScreen}
+                options={{ presentation: 'modal' }}
+              />
+              <RootStack.Screen name="Members" component={MembersScreen} />
+              <RootStack.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{ headerShown: true, title: 'Settings' }}
+              />
+              <RootStack.Screen
+                name="Integrations"
+                component={IntegrationsScreen}
+                options={{
+                  headerShown: true,
+                  title: 'Integrations',
+                  presentation: 'modal',
+                }}
+              />
+              <RootStack.Screen
+                name="EventEditor"
+                component={EventEditorScreen}
+                options={{
+                  headerShown: true,
+                  title: 'Plan Event',
+                  presentation: 'fullScreenModal',
+                }}
+              />
+              <RootStack.Screen
+                name="PrivacyPolicy"
+                component={PrivacyPolicyScreen}
+                options={{ presentation: 'modal' }}
+              />
+              <RootStack.Screen
+                name="Terms"
+                component={TermsScreen}
+                options={{ presentation: 'modal' }}
+              />
+            </RootStack.Group>
           )}
-
-          {/* Onboarding */}
-          {isAuthenticated && !hasOnboarded && (
-            <RootStack.Screen
-              name="Onboarding"
-              component={OnboardingScreen}
-              options={{ headerShown: false }}
-            />
-          )}
-
-          {/* Main App */}
-          <RootStack.Screen
-            name="MainTabs"
-            component={MainTabs}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen
-            name="Notifications"
-            component={NotificationsScreen}
-            options={{ headerShown: false, presentation: 'modal' }}
-          />
-          <RootStack.Screen
-            name="Members"
-            component={MembersScreen}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={{ title: 'Settings' }}
-          />
-          <RootStack.Screen
-            name="Integrations"
-            component={IntegrationsScreen}
-            options={{ title: 'Integrations', presentation: 'modal' }}
-          />
-          <RootStack.Screen
-            name="EventEditor"
-            component={EventEditorScreen}
-            options={{ title: 'Plan Event', presentation: 'fullScreenModal' }}
-          />
-
-          {/* Legal Screens */}
-          <RootStack.Screen
-            name="PrivacyPolicy"
-            component={PrivacyPolicyScreen}
-            options={{ headerShown: false, presentation: 'modal' }}
-          />
-          <RootStack.Screen
-            name="Terms"
-            component={TermsScreen}
-            options={{ headerShown: false, presentation: 'modal' }}
-          />
         </RootStack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

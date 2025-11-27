@@ -19,9 +19,13 @@ interface DatabaseEvent {
   source: string | null;
   created_at: string;
   updated_at: string;
+  event_attendees?: Array<{ member_id: string }>;
 }
 
 function mapDatabaseToEvent(db: DatabaseEvent): CalendarEvent {
+  // Extract attendee member IDs from the joined event_attendees
+  const attendees = db.event_attendees?.map((a) => a.member_id) ?? [];
+
   return {
     id: db.id,
     calendarId: db.calendar_id,
@@ -36,7 +40,7 @@ function mapDatabaseToEvent(db: DatabaseEvent): CalendarEvent {
     isBusyOnly: db.is_busy_only,
     privacyMode: db.privacy_mode,
     creatorId: db.creator_id,
-    attendees: [],
+    attendees,
   };
 }
 
@@ -70,7 +74,7 @@ export const eventRepository = {
 
     const { data, error } = await supabase
       .from('events')
-      .select('*')
+      .select('*, event_attendees(member_id)')
       .eq('calendar_id', calendarId)
       .order('start_at', { ascending: true });
 
@@ -91,6 +95,7 @@ export const eventRepository = {
       .select(
         `
         *,
+        event_attendees(member_id),
         calendars!inner(family_id)
       `,
       )
@@ -114,7 +119,7 @@ export const eventRepository = {
 
     const { data, error } = await supabase
       .from('events')
-      .select('*')
+      .select('*, event_attendees(member_id)')
       .eq('calendar_id', calendarId)
       .gte('start_at', fromDate.toISOString())
       .order('start_at', { ascending: true });
@@ -133,7 +138,7 @@ export const eventRepository = {
 
     const { data, error } = await supabase
       .from('events')
-      .select('*')
+      .select('*, event_attendees(member_id)')
       .eq('id', eventId)
       .single();
 

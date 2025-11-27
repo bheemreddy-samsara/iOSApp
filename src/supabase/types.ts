@@ -194,6 +194,29 @@ export interface Database {
           updated_at?: string;
         };
       };
+      event_attendees: {
+        Row: {
+          id: string;
+          event_id: string;
+          member_id: string;
+          response: 'pending' | 'accepted' | 'declined' | 'tentative';
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          event_id: string;
+          member_id: string;
+          response?: 'pending' | 'accepted' | 'declined' | 'tentative';
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          event_id?: string;
+          member_id?: string;
+          response?: 'pending' | 'accepted' | 'declined' | 'tentative';
+          created_at?: string;
+        };
+      };
     };
   };
 }
