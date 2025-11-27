@@ -1,39 +1,102 @@
 import * as AuthSession from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
 import { CalendarEvent } from '@/types';
 
-const outlookScopes = [
+// Required for web browser auth
+WebBrowser.maybeCompleteAuthSession();
+
+export const outlookScopes = [
   'openid',
   'profile',
   'offline_access',
-  'https://graph.microsoft.com/Calendars.Read'
+  'https://graph.microsoft.com/Calendars.Read',
 ];
 
-export async function startOutlookOAuth() {
-  // TODO: Update to use newer Expo AuthSession API
-  console.warn('Outlook OAuth not implemented - requires Expo AuthSession update');
-  return { type: 'cancel' };
-  
-  /*
-  return AuthSession.startAsync({
-    authUrl: `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${AuthSession.getQueryParams({
-      client_id: process.env.EXPO_PUBLIC_OUTLOOK_CLIENT_ID ?? '',
-      response_type: 'code',
-      redirect_uri: AuthSession.makeRedirectUri({ useProxy: true }),
-      response_mode: 'query',
-      scope: outlookScopes.join(' ')
-    })}`,
-    returnUrl: AuthSession.makeRedirectUri({ useProxy: true })
+const outlookDiscovery = {
+  authorizationEndpoint:
+    'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
+  tokenEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+  revocationEndpoint:
+    'https://login.microsoftonline.com/common/oauth2/v2.0/logout',
+};
+
+export function useOutlookAuth() {
+  const clientId = process.env.EXPO_PUBLIC_OUTLOOK_CLIENT_ID ?? '';
+  const redirectUri = AuthSession.makeRedirectUri({
+    scheme: 'togethercal',
   });
-  */
+
+  const [request, response, promptAsync] = AuthSession.useAuthRequest(
+    {
+      clientId,
+      scopes: outlookScopes,
+      redirectUri,
+      responseType: AuthSession.ResponseType.Code,
+      usePKCE: true,
+    },
+    outlookDiscovery,
+  );
+
+  return { request, response, promptAsync };
 }
 
-export async function fetchOutlookEvents(accessToken: string): Promise<CalendarEvent[]> {
-  const response = await fetch('https://graph.microsoft.com/v1.0/me/events?$top=250', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      Prefer: 'outlook.timezone="UTC"'
-    }
+export async function exchangeOutlookCode(
+  code: string,
+  codeVerifier: string,
+): Promise<{ accessToken: string; refreshToken?: string }> {
+  const clientId = process.env.EXPO_PUBLIC_OUTLOOK_CLIENT_ID ?? '';
+  const redirectUri = AuthSession.makeRedirectUri({
+    scheme: 'togethercal',
   });
+
+  const tokenResponse = await AuthSession.exchangeCodeAsync(
+    {
+      clientId,
+      code,
+      redirectUri,
+      extraParams: {
+        code_verifier: codeVerifier,
+      },
+    },
+    outlookDiscovery,
+  );
+
+  return {
+    accessToken: tokenResponse.accessToken,
+    refreshToken: tokenResponse.refreshToken ?? undefined,
+  };
+}
+
+export async function refreshOutlookToken(
+  refreshToken: string,
+): Promise<{ accessToken: string }> {
+  const clientId = process.env.EXPO_PUBLIC_OUTLOOK_CLIENT_ID ?? '';
+
+  const tokenResponse = await AuthSession.refreshAsync(
+    {
+      clientId,
+      refreshToken,
+    },
+    outlookDiscovery,
+  );
+
+  return {
+    accessToken: tokenResponse.accessToken,
+  };
+}
+
+export async function fetchOutlookEvents(
+  accessToken: string,
+): Promise<CalendarEvent[]> {
+  const response = await fetch(
+    'https://graph.microsoft.com/v1.0/me/events?$top=250',
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Prefer: 'outlook.timezone="UTC"',
+      },
+    },
+  );
   if (!response.ok) {
     throw new Error('Failed to load Outlook events');
   }
@@ -53,6 +116,6 @@ export async function fetchOutlookEvents(accessToken: string): Promise<CalendarE
     creatorId: item.organizer?.emailAddress?.address ?? '',
     attendees: [],
     isBusyOnly: true,
-    provider: 'outlook'
+    provider: 'outlook',
   }));
 }

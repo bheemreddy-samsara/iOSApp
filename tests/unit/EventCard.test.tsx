@@ -12,7 +12,7 @@ const baseEvent: CalendarEvent = {
   creatorId: 'm-ava',
   attendees: ['m-ava'],
   allDay: false,
-  multiDay: false
+  multiDay: false,
 };
 
 describe('EventCard', () => {
@@ -23,13 +23,13 @@ describe('EventCard', () => {
   });
 
   it('handles busy-only events', () => {
-    const busyEvent: CalendarEvent = { 
-      ...baseEvent, 
-      title: 'Product Sync', 
-      isBusyOnly: true, 
-      privacyMode: 'busy-only' 
+    const busyEvent: CalendarEvent = {
+      ...baseEvent,
+      title: 'Product Sync',
+      isBusyOnly: true,
+      privacyMode: 'busy-only',
     };
-    
+
     expect(busyEvent.isBusyOnly).toBe(true);
     expect(busyEvent.privacyMode).toBe('busy-only');
     expect(busyEvent.title).toBe('Product Sync');

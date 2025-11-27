@@ -24,5 +24,5 @@ export const secureStorage = {
     } catch (error) {
       console.warn('SecureStore removeItem error:', error);
     }
-  }
+  },
 };

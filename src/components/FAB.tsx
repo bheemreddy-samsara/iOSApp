@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 22,
     paddingVertical: 18,
     borderRadius: 999,
-    ...shadows.elevated
+    ...shadows.elevated,
   },
   pressed: {
-    opacity: 0.85
+    opacity: 0.85,
   },
   label: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '600'
-  }
+    fontWeight: '600',
+  },
 });

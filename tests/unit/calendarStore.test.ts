@@ -20,7 +20,7 @@ describe('calendarStore', () => {
       creatorId: 'm-ava',
       attendees: [],
       allDay: false,
-      multiDay: false
+      multiDay: false,
     };
 
     useCalendarStore.getState().upsertEvents([event]);

@@ -3,17 +3,16 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      'nativewind/babel',
       'react-native-reanimated/plugin',
       [
         'module-resolver',
         {
           root: ['./'],
           alias: {
-            '@': './src'
-          }
-        }
-      ]
-    ]
+            '@': './src',
+          },
+        },
+      ],
+    ],
   };
 };

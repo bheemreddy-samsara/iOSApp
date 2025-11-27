@@ -6,7 +6,7 @@ export const theme = {
   radii,
   typography,
   shadows,
-  motion
+  motion,
 };
 
 export type Theme = typeof theme;

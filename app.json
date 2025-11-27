@@ -3,7 +3,7 @@
     "name": "TogetherCal",
     "slug": "togethercal",
     "scheme": "togethercal",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,31 +13,57 @@
       "backgroundColor": "#F7F7FB"
     },
     "plugins": [
-      "expo-notifications"
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#5E6AD2"
+        }
+      ],
+      "expo-secure-store"
     ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.togethercal.app",
+      "buildNumber": "1",
       "infoPlist": {
         "NSCalendarsUsageDescription": "TogetherCal reads your calendar to keep your family in sync without uploading private details.",
-        "NSUserTrackingUsageDescription": "Tracking is disabled by default."
+        "NSContactsUsageDescription": "TogetherCal can suggest family members from your contacts to quickly set up your family group.",
+        "NSUserTrackingUsageDescription": "Tracking is disabled by default. We never share your data with advertisers.",
+        "UIBackgroundModes": ["fetch", "remote-notification"]
+      },
+      "entitlements": {
+        "aps-environment": "production"
       }
     },
     "android": {
       "package": "com.togethercal.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#F7F7FB"
-      }
+      },
+      "permissions": [
+        "android.permission.READ_CALENDAR",
+        "android.permission.READ_CONTACTS",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.VIBRATE"
+      ]
     },
     "web": {
       "bundler": "metro"
     },
     "extra": {
       "eas": {
-        "projectId": "00000000-0000-0000-0000-000000000000"
+        "projectId": "REPLACE_WITH_EAS_PROJECT_ID"
       }
     },
-    "runtimeVersion": "1.0.0"
+    "owner": "REPLACE_WITH_EXPO_USERNAME",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/REPLACE_WITH_EAS_PROJECT_ID"
+    }
   }
 }

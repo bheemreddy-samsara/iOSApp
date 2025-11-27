@@ -18,13 +18,48 @@
     "categoryYellow": "#FFE177"
   },
   "typography": {
-    "display": { "fontFamily": "SFProDisplay-Bold", "fontSize": 44, "lineHeight": 52, "fontWeight": "700" },
-    "title": { "fontFamily": "SFProDisplay-Semibold", "fontSize": 32, "lineHeight": 40, "fontWeight": "600" },
-    "headline": { "fontFamily": "SFProText-Semibold", "fontSize": 24, "lineHeight": 32, "fontWeight": "600" },
-    "body": { "fontFamily": "SFProText-Regular", "fontSize": 18, "lineHeight": 26, "fontWeight": "400" },
-    "callout": { "fontFamily": "SFProText-Medium", "fontSize": 16, "lineHeight": 22, "fontWeight": "500" },
-    "footnote": { "fontFamily": "SFProText-Medium", "fontSize": 14, "lineHeight": 20, "fontWeight": "500" },
-    "caption": { "fontFamily": "SFProText-Regular", "fontSize": 12, "lineHeight": 16, "fontWeight": "400" }
+    "display": {
+      "fontFamily": "SFProDisplay-Bold",
+      "fontSize": 44,
+      "lineHeight": 52,
+      "fontWeight": "700"
+    },
+    "title": {
+      "fontFamily": "SFProDisplay-Semibold",
+      "fontSize": 32,
+      "lineHeight": 40,
+      "fontWeight": "600"
+    },
+    "headline": {
+      "fontFamily": "SFProText-Semibold",
+      "fontSize": 24,
+      "lineHeight": 32,
+      "fontWeight": "600"
+    },
+    "body": {
+      "fontFamily": "SFProText-Regular",
+      "fontSize": 18,
+      "lineHeight": 26,
+      "fontWeight": "400"
+    },
+    "callout": {
+      "fontFamily": "SFProText-Medium",
+      "fontSize": 16,
+      "lineHeight": 22,
+      "fontWeight": "500"
+    },
+    "footnote": {
+      "fontFamily": "SFProText-Medium",
+      "fontSize": 14,
+      "lineHeight": 20,
+      "fontWeight": "500"
+    },
+    "caption": {
+      "fontFamily": "SFProText-Regular",
+      "fontSize": 12,
+      "lineHeight": 16,
+      "fontWeight": "400"
+    }
   },
   "spacing": {
     "0": 0,

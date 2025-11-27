@@ -7,6 +7,6 @@ serve(async (req) => {
   // TODO: Implement overlap detection and notifications.
 
   return new Response(JSON.stringify({ ok: true }), {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   });
 });

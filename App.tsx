@@ -6,19 +6,27 @@ import { RootNavigator } from '@/navigation';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AppState, AppStateStatus } from 'react-native';
 import { focusManager } from '@tanstack/react-query';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 1,
+      retry: 2,
       staleTime: 60_000,
-      gcTime: 5 * 60_000
-    }
-  }
+      gcTime: 5 * 60_000,
+      refetchOnWindowFocus: true,
+      refetchOnReconnect: true,
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
 });
 
 export default function App() {
-  const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
+  const [appState, setAppState] = useState<AppStateStatus>(
+    AppState.currentState,
+  );
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (status) => {
@@ -31,11 +39,13 @@ export default function App() {
   const client = useMemo(() => queryClient, []);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <QueryClientProvider client={client}>
-        <StatusBar style="dark" />
-        <RootNavigator />
-      </QueryClientProvider>
-    </GestureHandlerRootView>
+    <ErrorBoundary>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <QueryClientProvider client={client}>
+          <StatusBar style="dark" />
+          <RootNavigator />
+        </QueryClientProvider>
+      </GestureHandlerRootView>
+    </ErrorBoundary>
   );
 }

@@ -6,15 +6,19 @@ interface TimelineNowIndicatorProps {
   top: number;
 }
 
-export const TimelineNowIndicator = memo(({ top }: TimelineNowIndicatorProps) => (
-  <View pointerEvents="none" style={[styles.container, { top }]}
-    accessibilityRole="text"
-    accessibilityLabel="Current time indicator"
-  >
-    <View style={styles.dot} />
-    <View style={styles.line} />
-  </View>
-));
+export const TimelineNowIndicator = memo(
+  ({ top }: TimelineNowIndicatorProps) => (
+    <View
+      pointerEvents="none"
+      style={[styles.container, { top }]}
+      accessibilityRole="text"
+      accessibilityLabel="Current time indicator"
+    >
+      <View style={styles.dot} />
+      <View style={styles.line} />
+    </View>
+  ),
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -22,18 +26,18 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   dot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: colors.primary
+    backgroundColor: colors.primary,
   },
   line: {
     flex: 1,
     height: 2,
     backgroundColor: colors.primary,
-    marginLeft: 6
-  }
+    marginLeft: 6,
+  },
 });
