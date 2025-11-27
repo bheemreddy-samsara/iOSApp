@@ -3,6 +3,7 @@ import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
 import { Session } from '@supabase/supabase-js';
 import { Member } from '@/types';
 import { secureStorage } from '@/utils/secureStorage';
+import { getSupabaseClient } from '@/services/supabase';
 
 interface AuthState {
   session: Session | null;
@@ -33,6 +34,12 @@ export const useAuthStore = create<AuthState>()(
       setSession: (session) => set({ session }),
       setMember: (member) => set({ member }),
       signOut: async () => {
+        // Call Supabase signOut to invalidate the server-side session
+        const supabase = getSupabaseClient();
+        if (supabase) {
+          await supabase.auth.signOut();
+        }
+        // Clear local storage
         await secureStorage.removeItem('supabase-session');
         set({ session: null, member: null });
       },

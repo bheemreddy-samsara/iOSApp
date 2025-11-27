@@ -9,6 +9,16 @@ jest.mock('@/utils/secureStorage', () => ({
   },
 }));
 
+// Mock Supabase client
+const mockSignOut = jest.fn().mockResolvedValue({ error: null });
+jest.mock('@/services/supabase', () => ({
+  getSupabaseClient: jest.fn(() => ({
+    auth: {
+      signOut: mockSignOut,
+    },
+  })),
+}));
+
 describe('authStore', () => {
   beforeEach(() => {
     // Reset store state
@@ -16,6 +26,8 @@ describe('authStore', () => {
       session: null,
       member: null,
     });
+    // Clear mocks
+    mockSignOut.mockClear();
   });
 
   it('initializes with null session and member', () => {
@@ -83,5 +95,13 @@ describe('authStore', () => {
     // Verify cleared state
     expect(useAuthStore.getState().session).toBeNull();
     expect(useAuthStore.getState().member).toBeNull();
+  });
+
+  it('calls supabase.auth.signOut() on sign out (P1 security fix)', async () => {
+    // Sign out
+    await useAuthStore.getState().signOut();
+
+    // Verify Supabase signOut was called to invalidate server-side session
+    expect(mockSignOut).toHaveBeenCalledTimes(1);
   });
 });
