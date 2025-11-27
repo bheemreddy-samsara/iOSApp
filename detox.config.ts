@@ -7,6 +7,7 @@ const config: DetoxConfig = {
       $0: 'jest',
       config: 'e2e/jest.config.js',
     },
+    retries: 1,
   },
   apps: {
     'ios.debug': {
@@ -40,6 +41,15 @@ const config: DetoxConfig = {
     'ios.release': {
       device: 'simulator',
       app: 'ios.release',
+    },
+  },
+  behavior: {
+    init: {
+      exposeGlobals: true,
+    },
+    launchApp: 'auto',
+    cleanup: {
+      shutdownDevice: false,
     },
   },
 };
