@@ -4,7 +4,12 @@ import { device, expect, element, by, waitFor } from 'detox';
 // This is necessary because the app may have continuous background operations
 // that keep the main run loop busy (e.g., Zustand persist, React Query)
 async function launchAndWaitForApp() {
-  await device.launchApp({ delete: true, newInstance: true });
+  await device.launchApp({
+    delete: true,
+    newInstance: true,
+    // Pass E2E_TEST flag so the app can disable background operations
+    launchArgs: { E2E_TEST: 'true' },
+  });
   // Disable synchronization since the app may have continuous background tasks
   await device.disableSynchronization();
   // Wait for the app to settle
