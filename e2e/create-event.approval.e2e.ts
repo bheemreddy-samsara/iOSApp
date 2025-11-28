@@ -7,13 +7,11 @@ async function launchAndWaitForApp() {
   await device.launchApp({
     delete: true,
     newInstance: true,
-    // Pass E2E_TEST flag so the app can disable background operations
-    launchArgs: { E2E_TEST: 'true' },
   });
   // Disable synchronization since the app may have continuous background tasks
   await device.disableSynchronization();
   // Wait for the app to settle
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 }
 
 describe('App Launch', () => {

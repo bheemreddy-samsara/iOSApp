@@ -24,11 +24,6 @@ jest.mock('expo-secure-store', () => ({
   deleteItemAsync: jest.fn().mockResolvedValue(undefined),
 }));
 
-// Mock expo-launch-arguments
-jest.mock('expo-launch-arguments', () => ({
-  launchArguments: {},
-}));
-
 // Mock expo-apple-authentication
 jest.mock('expo-apple-authentication', () => ({
   signInAsync: jest.fn(),

@@ -21,8 +21,6 @@ PODS:
     - ExpoModulesCore
   - ExpoKeepAwake (13.0.2):
     - ExpoModulesCore
-  - ExpoLaunchArguments (0.3.0):
-    - ExpoModulesCore
   - ExpoLocalization (15.0.3):
     - ExpoModulesCore
   - ExpoModulesCore (1.12.26):
@@ -80,9 +78,9 @@ PODS:
   - hermes-engine (0.74.5):
     - hermes-engine/Pre-built (= 0.74.5)
   - hermes-engine/Pre-built (0.74.5)
-  - MMKV (2.2.3):
-    - MMKVCore (~> 2.2.3)
-  - MMKVCore (2.2.3)
+  - MMKV (2.2.4):
+    - MMKVCore (~> 2.2.4)
+  - MMKVCore (2.2.4)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -1352,7 +1350,6 @@ DEPENDENCIES:
   - "ExpoFont (from `../node_modules/.pnpm/expo-font@12.0.10_expo@51.0.39/node_modules/expo-font/ios`)"
   - "ExpoHaptics (from `../node_modules/.pnpm/expo-haptics@13.0.1_expo@51.0.39/node_modules/expo-haptics/ios`)"
   - "ExpoKeepAwake (from `../node_modules/.pnpm/expo-keep-awake@13.0.2_expo@51.0.39/node_modules/expo-keep-awake/ios`)"
-  - "ExpoLaunchArguments (from `../node_modules/.pnpm/expo-launch-arguments@0.3.0_expo@51.0.39_react-native@0.74.5_react@18.2.0/node_modules/expo-launch-arguments/ios`)"
   - "ExpoLocalization (from `../node_modules/.pnpm/expo-localization@15.0.3_expo@51.0.39/node_modules/expo-localization/ios`)"
   - "ExpoModulesCore (from `../node_modules/.pnpm/expo-modules-core@1.12.26/node_modules/expo-modules-core`)"
   - "ExpoSecureStore (from `../node_modules/.pnpm/expo-secure-store@13.0.2_expo@51.0.39/node_modules/expo-secure-store/ios`)"
@@ -1453,8 +1450,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/.pnpm/expo-haptics@13.0.1_expo@51.0.39/node_modules/expo-haptics/ios"
   ExpoKeepAwake:
     :path: "../node_modules/.pnpm/expo-keep-awake@13.0.2_expo@51.0.39/node_modules/expo-keep-awake/ios"
-  ExpoLaunchArguments:
-    :path: "../node_modules/.pnpm/expo-launch-arguments@0.3.0_expo@51.0.39_react-native@0.74.5_react@18.2.0/node_modules/expo-launch-arguments/ios"
   ExpoLocalization:
     :path: "../node_modules/.pnpm/expo-localization@15.0.3_expo@51.0.39/node_modules/expo-localization/ios"
   ExpoModulesCore:
@@ -1602,7 +1597,6 @@ SPEC CHECKSUMS:
   ExpoFont: 38dddf823e32740c2a9f37c926a33aeca736b5c4
   ExpoHaptics: 9f47be324f691b6291c17c216189ab832d1a4d69
   ExpoKeepAwake: dd02e65d49f1cfd9194640028ae2857e536eb1c9
-  ExpoLaunchArguments: eb74000046c8f6b39ac4f9f67068edf7517ac36e
   ExpoLocalization: 1b4195ed48148c7f52ce790d3965cc19483fcbf2
   ExpoModulesCore: 9ac73e2f60e0ea1d30137ca96cfc8c2aa34ef2b2
   ExpoSecureStore: 6506992a9f53c94ea716c54d4a63144965945c2c
@@ -1612,8 +1606,8 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
   hermes-engine: 8c1577f3fdb849cbe7729c2e7b5abc4b845e88f8
-  MMKV: 941e8774da0e6fdf12c6b3fcc833ca687ae5a42d
-  MMKVCore: 6d5cc1bacce539f4c974985dfe646fb65a5d27d2
+  MMKV: 1a8e7dbce7f9cad02c52e1b1091d07bd843aefaf
+  MMKVCore: f2dd4c9befea04277a55e84e7812f930537993df
   RCT-Folly: 5dc73daec3476616d19e8a53f0156176f7b55461
   RCTDeprecation: 3afceddffa65aee666dafd6f0116f1d975db1584
   RCTRequired: ec1239bc9d8bf63e10fb92bd8b26171a9258e0c1

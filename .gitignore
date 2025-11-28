@@ -31,3 +31,4 @@ coverage/
 *.swp
 *.swo
 
+dist/
